@@ -9,11 +9,23 @@ import sk.tuke.kpi.kp.numberlink.core.Tile;
 public class Main {
     public static void main(String[] args) {
 
-        var field = new Field(6,6);
-        System.out.println(field.getTile(0,4).getColor());
-        field.markTile(5,1,1);
-        System.out.println(field.getTile(1,1).getColor());
-        field.generateField();
+        var field = new Field(5,5);
+        field.markTile(0,0);
+        System.out.println(field.getVolueOfPrevious());
+        field.markTile(1,1);
+        field.markTile(0,1);
+        field.markTile(1,1);
+        field.markTile(1,2);
+        field.markTile(0,2);
+        field.markTile(1,2);
+        field.markTile(1,2);
+        field.markTile(1,3);
+        field.removeLines(2);
+
+
+
+
+        //field.generateField();
 
         /*for (int row = 0; row<field.getRowCount();row++){
             for(int column = 0;column<field.getColumnCount();column++){
