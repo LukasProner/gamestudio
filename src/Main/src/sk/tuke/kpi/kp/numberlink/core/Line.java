@@ -1,7 +1,7 @@
 package sk.tuke.kpi.kp.numberlink.core;
 
 public class Line extends Tile{
-    private Tile nextLine;
+    /*private Tile nextLine;
 
 
     public void setNextLine(Tile nextLine) {
@@ -10,5 +10,5 @@ public class Line extends Tile{
 
     public Tile getNextLine() {
         return nextLine;
-    }
+    }*/
 }

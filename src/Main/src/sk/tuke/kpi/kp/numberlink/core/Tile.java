@@ -4,6 +4,8 @@ public abstract class Tile {
     private boolean isColored;
     private Colors color= Colors.NULL;
 
+    private Tile nextLine;
+
     public void setColor(Colors color) {
         this.color = color;
     }
@@ -13,6 +15,14 @@ public abstract class Tile {
     }
     public boolean isColored() {
         return isColored;
+    }
+
+    public void setNextLine(Tile nextLine) {
+        this.nextLine = nextLine;
+    }
+
+    public Tile getNextLine() {
+        return nextLine;
     }
 
 }
