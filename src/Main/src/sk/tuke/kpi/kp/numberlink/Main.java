@@ -12,15 +12,18 @@ public class Main {
         var field = new Field(5,5);
         field.markTile(0,0);
         System.out.println(field.getVolueOfPrevious());
+        field.markTile(1,0);
         field.markTile(1,1);
-        field.markTile(0,1);
-        field.markTile(1,1);
-        field.markTile(1,2);
-        field.markTile(0,2);
-        field.markTile(1,2);
         field.markTile(1,2);
         field.markTile(1,3);
-        field.removeLines(2);
+        field.markTile(1,4);
+        field.markTile(0,1);
+        field.markTile(0,2);
+        field.markTile(1,2);
+
+       // field.removeContinuedLines(1,2);
+
+
 
 
 
