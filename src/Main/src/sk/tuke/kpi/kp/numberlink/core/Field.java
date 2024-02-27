@@ -75,12 +75,22 @@ public class Field {
             if(((Number) tiles[row][column]).getIsFirst()==false){
                 if (column+1 < columnCount && tiles[row][column +1].getColor().ordinal() == volueOfPrevious) {
                     tiles[row][column+1].setNextLine(tiles[row][column]);
-                    System.out.println("robi sa toto");
+                    System.out.println("1* sa robi pri hodnote "+ volueOfPrevious);
+                }else if (row +1 < rowCount && tiles[row+1][column].getColor().ordinal() == volueOfPrevious) {
+                    tiles[row+1][column].setNextLine(tiles[row][column]);
+                    System.out.println("2* sa robi pri hodnote "+ volueOfPrevious);
+                }else if (row -1 >= 0 && tiles[row-1][column].getColor().ordinal() == volueOfPrevious) {
+                    tiles[row-1][column].setNextLine(tiles[row][column]);
+                    System.out.println("3* sa robi pri hodnote "+ volueOfPrevious);
+                }else if (column -1 >= 0 && tiles[row][column-1].getColor().ordinal() == volueOfPrevious) {
+                    tiles[row][column-1].setNextLine(tiles[row][column]);
+                    System.out.println("4* sa robi pri hodnote "+ volueOfPrevious);
                 }
-                if(checkConnection(((Number) tiles[row][column]).getVolue())== true){
+
+                if(checkConnection(((Number) tiles[row][column]).getVolue())){
                     System.out.println("ano je to par");
                 }else{
-                    System.out.println("nie nie je to par");
+                    System.out.println("nie nie je to par pre hodnotu "+ volueOfPrevious);
                     ((Number) tiles[row][column]).setFirst(true);
                 }
 
@@ -88,41 +98,13 @@ public class Field {
             else{
                 removeLines(((Number) tiles[row][column]).getVolue());
             }
-        }/*
-       if(tiles[row][column] instanceof Number ){
-
-           if(((Number) tiles[row][column]).getIsFirst()==false){
-               System.out.println("first je false");
-               if (column+1 < columnCount && tiles[row][column +1].getColor().ordinal() == ((Number) tiles[row][column]).getVolue()) {
-                   tiles[row][column+1].setNextLine(tiles[row][column]);
-                   System.out.println("robi sa toto");
-               }else if (column > 0 && tiles[row][column - 1].getColor().ordinal() == ((Number) tiles[row][column]).getVolue()) {
-                   (tiles[row][column-1]).setNextLine(tiles[row][column]);
-                   System.out.println(" uz robi sa toto");
-               }
-               else{
-
-               }
-               if(checkConnection(((Number) tiles[row][column]).getVolue())== true){
-                   System.out.println("ano je to par");
-               }else{
-                   System.out.println("nie nie je to par");
-                   ((Number) tiles[row][column]).setFirst(true);
-               }
-
-           }
-           else{
-               volueOfPrevious = ((Number) tiles[row][column]).getVolue();
-               removeLines(((Number) tiles[row][column]).getVolue());
-           }
-       }*/
+        }
         else if(tiles[row][column] instanceof Line && volueOfPrevious != 0){
-            if (row > 0 && tiles[row - 1][column].getColor().ordinal() == volueOfPrevious && tiles[row - 1][column] instanceof Line||  (tiles[row - 1][column] instanceof Number && ((Number) tiles[row - 1][column]).getIsFirst())) {
+            if (row > 0 && tiles[row - 1][column].getColor().ordinal() == volueOfPrevious &&
+                    (tiles[row - 1][column] instanceof Line||  (tiles[row - 1][column] instanceof Number && ((Number) tiles[row - 1][column]).getIsFirst()))) {
                 tiles[row][column].setColor(colors[volueOfPrevious]);
                 removeContinuedLines(row,column);
-                //if(tiles[row-1][column] instanceof Line) {
-                    ( tiles[row - 1][column]).setNextLine(tiles[row][column]);
-                //}
+                ( tiles[row - 1][column]).setNextLine(tiles[row][column]);
                 generateField();
             }
             else if (column > 0 && tiles[row][column - 1].getColor().ordinal() == volueOfPrevious && (tiles[row][column-1] instanceof Line || (tiles[row][column-1] instanceof Number && ((Number) tiles[row][column-1]).getIsFirst()))) {
@@ -132,20 +114,16 @@ public class Field {
 
                 generateField();
             }
-            else if (column+1 < columnCount && tiles[row][column+1].getColor().ordinal() == volueOfPrevious && tiles[row][column+1] instanceof Line|| (tiles[row][column+1] instanceof Number && ((Number) tiles[row][column+1]).getIsFirst())) {
+            else if (column+1 < columnCount && tiles[row][column+1].getColor().ordinal() == volueOfPrevious && (tiles[row][column+1] instanceof Line|| (tiles[row][column+1] instanceof Number && ((Number) tiles[row][column+1]).getIsFirst()))) {
                 tiles[row][column].setColor(colors[volueOfPrevious]);
                 removeContinuedLines(row,column);
-               // if(tiles[row][column+1] instanceof Line) {
-                    (tiles[row][column+1]).setNextLine(tiles[row][column]);
-               // }
+                (tiles[row][column+1]).setNextLine(tiles[row][column]);
                 generateField();
             }
-            else if (row+1 < rowCount && tiles[row+1][column].getColor().ordinal() == volueOfPrevious && tiles[row+1][column] instanceof Line|| (tiles[row+1][column] instanceof Number && ((Number) tiles[row+1][column]).getIsFirst())) {
+            else if (row+1 < rowCount && tiles[row+1][column].getColor().ordinal() == volueOfPrevious && (tiles[row+1][column] instanceof Line|| (tiles[row+1][column] instanceof Number && ((Number) tiles[row+1][column]).getIsFirst()))) {
                 tiles[row][column].setColor(colors[volueOfPrevious]);
                 removeContinuedLines(row,column);
-                //if(tiles[row+1][column] instanceof Line) {
-                    (tiles[row+1][column]).setNextLine(tiles[row][column]);
-               // }
+                (tiles[row+1][column]).setNextLine(tiles[row][column]);
                 generateField();
             }else{
                 volueOfPrevious = 0;
@@ -154,16 +132,14 @@ public class Field {
     }
 
     public void removeContinuedLines(int row,int column){
-       // if(tiles[row][column] instanceof Line){
             if((tiles[row][column]).getNextLine()!=null) {
                 Line nextLine = (Line) (tiles[row][column]).getNextLine();
-                while (nextLine.getNextLine() != null) {
+                while (nextLine.getNextLine() != null && nextLine.getNextLine() instanceof Line) {
                     nextLine.setColor(Colors.NULL);
                     nextLine = (Line) nextLine.getNextLine();
                 }
                 nextLine.setColor(Colors.NULL);
             }
-        //}
     }
     public boolean checkConnection(int volueOfNumber){
         System.out.println("generujem field");

@@ -9,102 +9,52 @@ import sk.tuke.kpi.kp.numberlink.core.Tile;
 public class Main {
     public static void main(String[] args) {
 
-        var field = new Field(5,5);
+        var field = new Field(5, 5);
+
+        // solved
+        //4
         /*field.markTile(4,4);
         field.markTile(4,3);
-        field.markTile(3,3);
-        field.markTile(2,3);
-       // field.markTile(2,4);
-        field.markTile(1,3);
-        field.markTile(0,3);
-        field.markTile(3,4);
-        field.markTile(3,3);*/
-        field.markTile(4,4);//***************
-        field.markTile(4,3);
-        field.markTile(3,3);
+        field.markTile(4,2);
+        field.markTile(3,2);
         field.markTile(3,2);
         field.markTile(3,1);
-       /* field.markTile(2,4);
-        field.markTile(1,4);
+        //1
+        field.markTile(3,4);
+        field.markTile(3,3);
+        field.markTile(2,3);
         field.markTile(1,3);
         field.markTile(1,2);
         field.markTile(1,1);
         field.markTile(1,0);
-        field.markTile(1,2);*/
-
-
-       // field.checkConnection(4);
-
-    /*field.markTile(4,4);
-        field.markTile(4,3);
-        field.markTile(3,3);
-        field.markTile(2,3);
-       // field.markTile(2,4);
-        field.markTile(1,3);
-        field.markTile(0,3);
-        field.markTile(3,4);
-        field.markTile(3,3);*/
-
-        /*field.markTile(4,4); // PORIESIT POTOM !!!!!!
-        field.markTile(4,3);
-        field.markTile(3,3);
-        field.markTile(2,3);
-        field.markTile(2,4);
-        field.markTile(1,1);*/
-
-        /*field.markTile(1,0);
-        field.markTile(1,1);
-        field.markTile(1,2);
-        field.markTile(1,3);
-        field.markTile(1,4);
-        field.markTile(1,1);
-        field.markTile(2,1);*/
-        //field.markTile(0,1);
-        //field.markTile(0,2);
-       // field.markTile(1,2);
-
-        /*field.markTile(0,1);
+        field.markTile(0,0);
+        //2
+        field.markTile(0,1);
         field.markTile(0,2);
         field.markTile(0,3);
         field.markTile(0,4);
-        field.markTile(0,1);
-        field.markTile(1,1);*/
+        field.markTile(1,4);
+        field.markTile(2,4);
+        //3
+        field.markTile(2,2);
+        field.markTile(2,1);
+        field.markTile(2,0);
+        field.markTile(3,0);
+        field.markTile(4,0);
+        field.markTile(4,1);*/
 
-
-       // field.removeContinuedLines(1,2);
-
-//********************************
-/*if(tiles[row][column] instanceof Number ){
-            volueOfPrevious = ((Number) tiles[row][column]).getVolue();
-            removeContinuedLines(row,column);
-            if(((Number) tiles[row][column]).getIsFirst()==false){
-                if (column+1 < columnCount && tiles[row][column +1].getColor().ordinal() == volueOfPrevious) {
-                    tiles[row][column+1].setNextLine(tiles[row][column]);
-                    System.out.println("robi sa toto");
-                }
-                if(checkConnection(((Number) tiles[row][column]).getVolue())== true){
-                    System.out.println("ano je to par");
-                }else{
-                    System.out.println("nie nie je to par");
-                    ((Number) tiles[row][column]).setFirst(true);
-                }
-
-            }
-            else{
-                removeLines(((Number) tiles[row][column]).getVolue());
-            }
-        }*/
+        // test na kontrolu toho ak oznacim jedno cislo ci nebudem moct dat ku druhemu
+        /*field.markTile(4, 4); // PORIESIT POTOM !!!!!!
+        field.markTile(4, 3);
+        field.markTile(3, 3);
+        field.markTile(2, 3);
+        field.markTile(2, 4);
+        field.markTile(1, 1);
+        field.markTile(0, 2);
+        System.out.println(field.getTile(0,2).getColor());
+        field.markTile(1, 4);*/
 
 
 
-        //field.generateField();
-
-        /*for (int row = 0; row<field.getRowCount();row++){
-            for(int column = 0;column<field.getColumnCount();column++){
-                var tile = field.getTile(row,column);
-                System.out.print(" -");
-            }
-            System.out.println("");
-        }*/
     }
 }
