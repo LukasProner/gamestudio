@@ -138,7 +138,7 @@ public class Field {
     private boolean isThereFisrtOfNumber(int volueOfPrevious) {
         for (int row = 0; row<getRowCount(); row++){
             for(int column = 0; column<getColumnCount(); column++) {
-                if(tiles[row][column]instanceof Number && ((Number) tiles[row][column]).getIsFirst()){
+                if(tiles[row][column]instanceof Number && ((Number) tiles[row][column]).getIsFirst() && ((Number) tiles[row][column]).getVolue() == volueOfPrevious){
                     return true;
                 }
             }
