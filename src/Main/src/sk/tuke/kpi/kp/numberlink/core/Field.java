@@ -49,13 +49,13 @@ public class Field {
     }
 
     public void generateField(){
-        System.out.print("__");
+        System.out.print("___");
         for(int i = 0; i<getColumnCount(); i++) {
             System.out.print(i+1+"_");
         }
         System.out.println();
         for (int row = 0; row<getRowCount(); row++){
-            System.out.print((char) ('A' + row) );
+            System.out.print((char) ('A' + row) +"|");
             for(int column = 0; column<getColumnCount(); column++) {
                 if(tiles[row][column].getColor() == Colors.NULL){
                     System.out.print(" _");
@@ -91,9 +91,13 @@ public class Field {
                     System.out.println("ano je to par");
                 }else{
                     System.out.println("nie nie je to par pre hodnotu "+ volueOfPrevious);
-                    ((Number) tiles[row][column]).setFirst(true);
-                }
 
+                    if(!isThereFisrtOfNumber(volueOfPrevious)){
+                        ((Number) tiles[row][column]).setFirst(true);
+                    }else{
+                        changeFisrtInNumber(volueOfPrevious);
+                    }
+                }
             }
             else{
                 removeLines(((Number) tiles[row][column]).getVolue());
@@ -131,6 +135,36 @@ public class Field {
         }
     }
 
+    private boolean isThereFisrtOfNumber(int volueOfPrevious) {
+        for (int row = 0; row<getRowCount(); row++){
+            for(int column = 0; column<getColumnCount(); column++) {
+                if(tiles[row][column]instanceof Number && ((Number) tiles[row][column]).getIsFirst()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void changeFisrtInNumber(int volueOfPrevious) {
+        System.out.println("**********************");
+        for (int row = 0; row<getRowCount(); row++){
+            for(int column = 0; column<getColumnCount(); column++) {
+                if(tiles[row][column] instanceof Number && ((Number) tiles[row][column]).getVolue()==volueOfPrevious){
+                    if(((Number) tiles[row][column]).getIsFirst()){
+                        ((Number) tiles[row][column]).setFirst(false);
+                        System.out.println("last = ["+row+"]["+column+"]");
+                    }else{
+                        ((Number) tiles[row][column]).setFirst(true);
+                        System.out.println("first = ["+row+"]["+column+"]");
+                    }
+                }
+            }
+        }
+        removeLines(volueOfPrevious);
+
+    }
+
     public void removeContinuedLines(int row,int column){
             if((tiles[row][column]).getNextLine()!=null) {
                 Line nextLine = (Line) (tiles[row][column]).getNextLine();
@@ -154,7 +188,6 @@ public class Field {
                     while (nextLine.getNextLine() != null) {
                         System.out.println("*row = " + row + " column = " + column);
                         nextLine =  nextLine.getNextLine();
-                        //nextLine.setColor(Colors.NULL);//vymazem
                     }
                     generateField();
 
@@ -170,6 +203,7 @@ public class Field {
     }
 
     public void removeLines(int volue){
+        System.out.println("REMOVING LINES");
         for (int row = 0; row<getRowCount(); row++){
             for(int column = 0; column<getColumnCount(); column++) {
                 if(tiles[row][column] instanceof Line && tiles[row][column].getColor().ordinal() == volue){

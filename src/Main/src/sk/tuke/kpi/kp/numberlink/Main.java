@@ -11,9 +11,24 @@ public class Main {
 
         var field = new Field(5, 5);
 
-        // solved
+
+        /*//changing of firsts
+        field.markTile(0,1);
+        field.markTile(0,2);
+        field.markTile(0,3);
+        field.markTile(0,4);
+        //field.markTile(1,4);
+        field.markTile(2,4);
+
+        Number number = (Number)field.getTile(0,1);
+        System.out.println(number.getIsFirst());
+        number = (Number)field.getTile(2,4);
+        System.out.println(number.getIsFirst());
+        field.generateField();
+*/
+        // solved 5x5
         //4
-        /*field.markTile(4,4);
+        field.markTile(4,4);
         field.markTile(4,3);
         field.markTile(4,2);
         field.markTile(3,2);
@@ -41,7 +56,7 @@ public class Main {
         field.markTile(2,0);
         field.markTile(3,0);
         field.markTile(4,0);
-        field.markTile(4,1);*/
+        field.markTile(4,1);
 
         // test na kontrolu toho ak oznacim jedno cislo ci nebudem moct dat ku druhemu
         /*field.markTile(4, 4); // PORIESIT POTOM !!!!!!
