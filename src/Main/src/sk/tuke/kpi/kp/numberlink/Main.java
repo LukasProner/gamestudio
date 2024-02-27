@@ -10,9 +10,47 @@ public class Main {
     public static void main(String[] args) {
 
         var field = new Field(6, 6);
+        // test vztvorenia dvojice, nasledneho prerusenia inou liniu a znovupokusenia sa o spojenie
+        field.markTile(0,0);
+        field.markTile(1,0);
+        field.markTile(2,0);
+        field.markTile(2,1);
+        field.markTile(2,2);
+        field.markTile(2,3);
+
+        field.markTile(0,1);
+        field.markTile(1,1);
+        field.markTile(1,0);
+
+        field.markTile(0,0);
+        field.markTile(1,0);
+        field.markTile(2,0);
+        field.markTile(2,1);
+        field.markTile(2,2);
+        field.markTile(2,3);
+
+      /*  field.markTile(1,3);
+        field.markTile(1,4);
+        field.markTile(2,4);
+        field.markTile(3,4);
+        field.markTile(4,4);
+        field.markTile(5,4);
+
+        field.markTile(2,3);
+        field.markTile(2,4);
+        field.markTile(3,4);
+
+        field.markTile(1,3);
+        field.markTile(1,4);
+        field.markTile(2,4);
+        field.markTile(3,4);
+        field.markTile(4,4);
+        field.markTile(5,4);*/
+
+
         //game of 6x6
         //1
-        field.markTile(0,0);
+       /*field.markTile(0,0);
         field.markTile(1,0);
         field.markTile(2,0);
         field.markTile(2,1);
@@ -24,11 +62,13 @@ public class Main {
         field.markTile(1,2);
         field.markTile(1,3);
         field.markTile(1,4);
+        System.out.println("helo");
+
         //2 correct
         field.markTile(0,1);
         field.markTile(1,1);
         field.markTile(1,2);
-        field.markTile(1,3);
+        field.markTile(1,3);*/
 
 
 

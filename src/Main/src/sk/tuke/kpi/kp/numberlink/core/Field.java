@@ -6,7 +6,8 @@ public class Field {
     private final int columnCount;
 
     private final Tile[][] tiles;
-    //private int volueOfPrevious[][] = new int[10][3];
+    private Maps maps;
+    private final Integer[] pairs;
     private int volueOfPrevious = 0;
     private GameState state = GameState.PLAYING;
     private Colors[] colors = Colors.values(); //to convert a number to a color
@@ -18,11 +19,13 @@ public class Field {
         this.columnCount = columnCount;
         tiles = new Tile[rowCount][columnCount];
         prepareField();
+        this.pairs = new Integer[maps.getCountOfNumber(rowCount)];
+        System.out.println("pairs = " +pairs.length);
     }
 
 
     public void prepareField() {
-        Maps maps = new Maps(getRowCount(), getColumnCount());
+        this.maps = new Maps(getRowCount(), getColumnCount());
         int[][] mapValues = maps.getMap(getRowCount());
         System.out.print("__");
         for(int i = 0; i<getColumnCount(); i++) {
@@ -89,6 +92,7 @@ public class Field {
 
                 if(checkConnection(((Number) tiles[row][column]).getVolue())){
                     System.out.println("ano je to par");
+                    checkStateOfTheGame();
                 }else{
                     System.out.println("nie nie je to par pre hodnotu "+ volueOfPrevious);
 
@@ -107,12 +111,14 @@ public class Field {
             if (row > 0 && tiles[row - 1][column].getColor().ordinal() == volueOfPrevious &&
                     (tiles[row - 1][column] instanceof Line||  (tiles[row - 1][column] instanceof Number && ((Number) tiles[row - 1][column]).getIsFirst()))) {
                 tiles[row][column].setColor(colors[volueOfPrevious]);
+                System.out.println("--1--");
                 removeContinuedLines(row,column);
                 ( tiles[row - 1][column]).setNextLine(tiles[row][column]);
                 generateField();
             }
             else if (column > 0 && tiles[row][column - 1].getColor().ordinal() == volueOfPrevious && (tiles[row][column-1] instanceof Line || (tiles[row][column-1] instanceof Number && ((Number) tiles[row][column-1]).getIsFirst()))) {
                 tiles[row][column].setColor(colors[volueOfPrevious]);
+                System.out.println("--2--");
                 removeContinuedLines(row,column);
                 (tiles[row][column-1]).setNextLine(tiles[row][column]);
 
@@ -133,6 +139,10 @@ public class Field {
                 volueOfPrevious = 0;
             }
         }
+    }
+
+    private void checkStateOfTheGame() {
+
     }
 
     private boolean isThereFisrtOfNumber(int volueOfPrevious) {
@@ -166,14 +176,20 @@ public class Field {
     }
 
     public void removeContinuedLines(int row,int column){
-            if((tiles[row][column]).getNextLine()!=null) {
-                Line nextLine = (Line) (tiles[row][column]).getNextLine();
-                while (nextLine.getNextLine() != null && nextLine.getNextLine() instanceof Line) {
-                    nextLine.setColor(Colors.NULL);
-                    nextLine = (Line) nextLine.getNextLine();
-                }
-                nextLine.setColor(Colors.NULL);
+        if((tiles[row][column]).getNextLine()!=null) {
+            Line nextLine = (Line) (tiles[row][column]).getNextLine();
+            while (nextLine.getNextLine() != null && nextLine.getNextLine() instanceof Line) {
+                nextLine.setColor(Colors.NULL);//nextLine.setNextLine(null);
+                System.out.println("vymayavam tieto dlazdice "+ row+" "+column);
+                Line prevline = nextLine;
+                nextLine = (Line) nextLine.getNextLine();
+                prevline.setNextLine(null);
             }
+            if(nextLine instanceof Line) {
+                nextLine.setColor(Colors.NULL);
+                nextLine.setNextLine(null);
+            }
+        }
     }
     public boolean checkConnection(int volueOfNumber){
         System.out.println("generujem field");
@@ -208,6 +224,7 @@ public class Field {
             for(int column = 0; column<getColumnCount(); column++) {
                 if(tiles[row][column] instanceof Line && tiles[row][column].getColor().ordinal() == volue){
                     tiles[row][column].setColor(Colors.NULL);
+                    tiles[row][column].setNextLine(null);
                 }
             }
         }

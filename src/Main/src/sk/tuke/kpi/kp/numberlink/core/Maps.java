@@ -101,6 +101,10 @@ public class Maps {
             return sixXsix;
         }else if(row == 7){
             return sevenXseven;
+        }else if(row == 8){
+            return eightXeight;
+        }else if(row == 9){
+            return nineXnine;
         }
         return null;
     }
