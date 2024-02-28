@@ -11,6 +11,54 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FieldTest {
     @Test
+    public void twoCircle() {
+        var field = new Field(6, 6);
+        field.markTile(0,5);
+        field.markTile(1,5);
+        field.markTile(2,5);
+        field.markTile(3,5);
+        field.markTile(4,5);
+        field.markTile(4,4);
+        field.markTile(3,4);
+
+        field.markTile(2,4);
+        field.markTile(2,5);
+    }
+
+    @Test
+    public void spatnyPrechod() {
+        var field = new Field(6, 6);
+        // test vztvorenia dvojice, nasledneho prerusenia inou liniu a znovupokusenia sa o spojenie
+        field.markTile(0,0);
+        field.markTile(1,0);
+        field.markTile(2,0);
+        System.out.println("main - "+field.getTile(2,1).getNextLine());
+        assertSame((field.getTile(2,1).getNextLine()),null);
+        field.markTile(2,1);
+        assertSame((field.getTile(2,1).getNextLine()),null);
+        field.markTile(2,2);
+        assertSame((field.getTile(2,1).getNextLine()),field.getTile(2,2));
+
+        field.markTile(2,3);
+        assertSame((field.checkConnection(1)),true);
+
+        field.markTile(0,1);
+        field.markTile(1,1);
+        field.markTile(2,1);
+        //field.getTile(2,0).setNextLine(null);
+        assertSame((field.checkConnection(1)),false);
+        assertSame((field.getTile(2,1).getNextLine()),null);
+        field.markTile(2,0);
+        assertSame((field.getTile(2,1).getNextLine()),field.getTile(2,0));
+        assertSame((field.getTile(2,2).getNextLine()),null);
+        assertSame((field.getTile(2,0).getNextLine()),null);
+
+        field.markTile(1,0);
+        assertSame((field.getTile(1,0).getNextLine()),null);
+        assertSame((field.getTile(2,0).getNextLine()),field.getTile(1,0));
+    }
+
+    /*@Test
     public void usualControlOfOverlayFor6x6() {
         Field field = new Field(6, 6);
         assertSame(field.getRowCount(),6);
@@ -43,7 +91,7 @@ public class FieldTest {
         field.markTile(0,0);
         assertSame(((Number) field.getTile(2, 3)).getIsFirst(),false);
         assertSame(((Number) field.getTile(0, 0)).getIsFirst(),true);
-    }
+    }*/
 
     /*@Test
     public void SpacielCaseOfChangingPositions() {

@@ -45,7 +45,7 @@ public class Main {
 
 
         //dve stvorkove kruznice
-        /*var field = new Field(6, 6);
+        var field = new Field(6, 6);
         field.markTile(0,5);
         field.markTile(1,5);
         field.markTile(2,5);
@@ -68,12 +68,12 @@ public class Main {
         field.markTile(3,5);
         field.markTile(4,5);
         field.markTile(4,4);
-        field.markTile(3,4);*/
+        field.markTile(3,4);
 
 
 
         //test toho že ak napriklad spojim v 6x6 1 a potom spätne pojdem 2 po 1 ceste
-        var field = new Field(6, 6);
+        /*var field = new Field(6, 6);
         // test vztvorenia dvojice, nasledneho prerusenia inou liniu a znovupokusenia sa o spojenie
         field.markTile(0,0);
         field.markTile(1,0);
@@ -85,16 +85,11 @@ public class Main {
 
         field.markTile(2,2);
         System.out.println("main - "+field.getTile(2,1).getNextLine());
-
-
         field.markTile(2,3);
-
         field.markTile(0,1);
         field.markTile(1,1);
         field.markTile(2,1);
-
         //field.getTile(2,0).setNextLine(null);
-
         System.out.println("main - "+field.getTile(2,1).getNextLine());
 
         field.markTile(2,0);
@@ -107,7 +102,7 @@ public class Main {
         field.markTile(1,0);
         field.generateField();
 
-
+*/
        /* field.markTile(0,0);
         field.markTile(1,0);
         field.markTile(2,0);
