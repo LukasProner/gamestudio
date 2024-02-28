@@ -20,7 +20,7 @@ public class Field {
         tiles = new Tile[rowCount][columnCount];
         prepareField();
         this.pairs = new Integer[maps.getCountOfNumber(rowCount)];
-        System.out.println("pairs = " +pairs.length);
+        //System.out.println("pairs = " +pairs.length);
     }
 
 
@@ -92,7 +92,11 @@ public class Field {
 
                 if(checkConnection(((Number) tiles[row][column]).getVolue())){
                     System.out.println("ano je to par");
-                    checkStateOfTheGame();
+                    if(checkStateOfTheGame()){
+                        System.out.println("GAME OVER");
+                    }else{
+                        System.out.println("THE GAME IS NOT OVER YER");
+                    }
                 }else{
                     System.out.println("nie nie je to par pre hodnotu "+ volueOfPrevious);
 
@@ -141,8 +145,21 @@ public class Field {
         }
     }
 
-    private void checkStateOfTheGame() {
-
+    private boolean checkStateOfTheGame() {
+        System.out.println("CHECKING STATE OF THE GAME");
+        int counter = 0;
+        for( int i = 0; i< pairs.length; i++){
+            if(checkConnection(i+1)){
+                counter++;
+            }
+            else{
+                return false;
+            }
+        }
+        if(counter == pairs.length){
+            return true;
+        }
+        return false;
     }
 
     private boolean isThereFisrtOfNumber(int volueOfPrevious) {
@@ -192,8 +209,8 @@ public class Field {
         }
     }
     public boolean checkConnection(int volueOfNumber){
-        System.out.println("generujem field");
-        generateField();
+        //System.out.println("generujem field");
+        //generateField();
 
         for (int row = 0; row<getRowCount(); row++){
             for(int column = 0; column<getColumnCount(); column++) {
@@ -205,10 +222,7 @@ public class Field {
                         System.out.println("*row = " + row + " column = " + column);
                         nextLine =  nextLine.getNextLine();
                     }
-                    generateField();
-
-
-
+                    //generateField();
                     if(nextLine instanceof Number && nextLine.getColor().ordinal() ==volueOfNumber){
                         return true;
                     }

@@ -9,7 +9,7 @@ import sk.tuke.kpi.kp.numberlink.core.Tile;
 public class Main {
     public static void main(String[] args) {
 
-        var field = new Field(6, 6);
+       /* var field = new Field(6, 6);
         // test vztvorenia dvojice, nasledneho prerusenia inou liniu a znovupokusenia sa o spojenie
         field.markTile(0,0);
         field.markTile(1,0);
@@ -27,7 +27,7 @@ public class Main {
         field.markTile(2,0);
         field.markTile(2,1);
         field.markTile(2,2);
-        field.markTile(2,3);
+        field.markTile(2,3);*/
 
       /*  field.markTile(1,3);
         field.markTile(1,4);
@@ -90,7 +90,8 @@ public class Main {
         field.generateField();
 */
         // solved 5x5
-        /*//4
+        //4
+        Field field = new Field(5, 5);
         field.markTile(4,4);
         field.markTile(4,3);
         field.markTile(4,2);
@@ -119,7 +120,7 @@ public class Main {
         field.markTile(2,0);
         field.markTile(3,0);
         field.markTile(4,0);
-        field.markTile(4,1);*/
+        field.markTile(4,1);
 
         // test na kontrolu toho ak oznacim jedno cislo ci nebudem moct dat ku druhemu
         /*field.markTile(4, 4); // PORIESIT POTOM !!!!!!
