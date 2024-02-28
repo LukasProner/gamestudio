@@ -80,7 +80,7 @@ public class Maps {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     };
-    public int getCountOfNumber(int size){
+    /*public int getCountOfNumber(int size){
         if(size == 5){
             return 4;
         }else if(size == 6){
@@ -93,19 +93,37 @@ public class Maps {
             return 8;
         }
         return 0;
+    }*/
+    public int getCountOfNumber(int size) {
+        switch (size) {
+            case 5:
+                return 4;
+            case 6:
+                return 5;
+            case 7:
+                return 6;
+            case 8:
+                return 7;
+            case 9:
+                return 8;
+            default:
+                return 0;
+        }
     }
     public int[][] getMap(int row) {
-        if(row == 5){
-            return fiveXfive;
-        }else if(row ==6){
-            return sixXsix;
-        }else if(row == 7){
-            return sevenXseven;
-        }else if(row == 8){
-            return eightXeight;
-        }else if(row == 9){
-            return nineXnine;
+        switch (row) {
+            case 5:
+                return fiveXfive;
+            case 6:
+                return sixXsix;
+            case 7:
+                return sevenXseven;
+            case 8:
+                return eightXeight;
+            case 9:
+                return nineXnine;
+            default:
+                return null;
         }
-        return null;
     }
 }

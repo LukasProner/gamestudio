@@ -6,6 +6,13 @@ public abstract class Tile {
 
     private Tile nextLine;
 
+    public boolean hasNextLine() {
+        if(getNextLine()!=null){
+            return true;
+        }
+        return false;
+    }
+
     public void setColor(Colors color) {
         this.color = color;
     }
