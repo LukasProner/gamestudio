@@ -2,9 +2,7 @@ package sk.tuke.kpi.kp.numberlink.core;
 
 public class Field {
     private final int rowCount;
-
     private final int columnCount;
-
     private final Tile[][] tiles;
     private Maps maps;
     private final Integer[] pairs;
@@ -22,8 +20,6 @@ public class Field {
         this.pairs = new Integer[maps.getCountOfNumber(rowCount)];
         //System.out.println("pairs = " +pairs.length);
     }
-
-
     public void prepareField() {
         this.maps = new Maps(getRowCount(), getColumnCount());
         int[][] mapValues = maps.getMap(getRowCount());
@@ -88,7 +84,9 @@ public class Field {
                 }else if (column -1 >= 0 && tiles[row][column-1].getColor().ordinal() == volueOfPrevious) {
                     tiles[row][column-1].setNextLine(tiles[row][column]);
                     System.out.println("4* sa robi pri hodnote "+ volueOfPrevious);
-                }
+                }/*else{
+                    changeFisrtInNumber(volueOfPrevious);
+                }*/
 
                 if(checkConnection(((Number) tiles[row][column]).getVolue())){
                     System.out.println("ano je to par");
@@ -109,7 +107,9 @@ public class Field {
                 }
             }
             else{
+                tiles[row][column].setNextLine(null);
                 removeLines(((Number) tiles[row][column]).getVolue());
+
             }
         }
         else if(tiles[row][column] instanceof Line && volueOfPrevious != 0 && volueOfPrevious!=tiles[row][column].getColor().ordinal()){//skontroluj ci je potrebne posledna podmienka
@@ -246,7 +246,7 @@ public class Field {
                         nextLine =  nextLine.getNextLine();
                     }
                     //generateField();
-                    if(nextLine instanceof Number && nextLine.getColor().ordinal() ==volueOfNumber){
+                    if(nextLine instanceof Number && nextLine.getColor().ordinal() ==volueOfNumber && !((Number) nextLine).getIsFirst()){
                         return true;
                     }
                 }
