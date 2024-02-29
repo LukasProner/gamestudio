@@ -10,10 +10,22 @@ import sk.tuke.kpi.kp.numberlink.test.FieldTest;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        /*var field = new Field(6, 6);
+      /*  var field = new Field(6, 6);
         var ui = new ConsoleUI(field);
-        ui.play();*/
-
+        ui.play();
+*/
+        var field = new Field(6, 6);
+        field.markTile(0,2);
+        field.markTile(0,3);
+        field.markTile(0,4);
+        field.markTile(1,4);
+        field.markTile(2,4);
+        field.markTile(3,4);
+        field.markTile(3,3);
+        field.markTile(3,0);
+        field.markTile(3,3);
+        field.markTile(3,2);
+        field.generateField();
 
         //test prekryvania 2 a 4
        /* var field = new Field(6, 6);
@@ -44,7 +56,7 @@ public class Main {
         field.markTile(1,4);*/
 
 
-        //dve stvorkove kruznice
+        /*//dve stvorkove kruznice
         var field = new Field(6, 6);
         field.markTile(0,5);
         field.markTile(1,5);
@@ -69,7 +81,7 @@ public class Main {
         field.markTile(4,5);
         field.markTile(4,4);
         field.markTile(3,4);
-
+*/
 
 
         //test toho že ak napriklad spojim v 6x6 1 a potom spätne pojdem 2 po 1 ceste

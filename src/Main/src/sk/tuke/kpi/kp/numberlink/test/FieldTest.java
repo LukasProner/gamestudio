@@ -11,6 +11,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FieldTest {
     @Test
+    public void testOfRemovingNumberAndGettinItAgainFromLineTile() {
+        var field = new Field(6, 6);
+        field.markTile(0,2);
+        field.markTile(0,3);
+        field.markTile(0,4);
+        field.markTile(1,4);
+        field.markTile(2,4);
+        field.markTile(3,4);
+        field.markTile(3,3);
+        System.out.println("-----1");
+        field.markTile(3,0);
+        System.out.println("-----2");
+        field.markTile(3,3);
+        System.out.println("-----3");
+        field.markTile(3,2);
+        System.out.println("-----4");
+
+        assertSame((field.getTile(3,2).getColor()),Colors.YELLOW);
+
+        field.generateField();
+    }
+
+    @Test
     public void twoXCircleSPrerusenimADokoncenim() {
         var field = new Field(6, 6);
         field.markTile(0,5);
@@ -41,7 +64,7 @@ public class FieldTest {
         assertSame((field.getTile(2,5).getColor()),Colors.NULL);
     }
 
-    /*@Test
+    @Test
     public void twoXCircleSoZrusenimAOpakovanim() {
         var field = new Field(6, 6);
         field.markTile(0,5);
@@ -99,8 +122,8 @@ public class FieldTest {
 
 
     }
-*/
-    /*@Test
+
+    @Test
     public void spatnyPrechod() {
         var field = new Field(6, 6);
         // test vztvorenia dvojice, nasledneho prerusenia inou liniu a znovupokusenia sa o spojenie
@@ -132,8 +155,8 @@ public class FieldTest {
         assertSame((field.getTile(1,0).getNextLine()),null);
         assertSame((field.getTile(2,0).getNextLine()),field.getTile(1,0));
     }
-*/
-    /*@Test
+
+    @Test
     public void usualControlOfOverlayFor6x6() {
         Field field = new Field(6, 6);
         assertSame(field.getRowCount(),6);
@@ -166,9 +189,9 @@ public class FieldTest {
         field.markTile(0,0);
         assertSame(((Number) field.getTile(2, 3)).getIsFirst(),false);
         assertSame(((Number) field.getTile(0, 0)).getIsFirst(),true);
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void SpacielCaseOfChangingPositions() {
         var field = new Field(6,6);
         field.markTile(0,0);
@@ -196,9 +219,9 @@ public class FieldTest {
         field.markTile(1,3);
         assertSame(((Number) field.getTile(0, 1)).getIsFirst(),true);
 
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void changingOfFirsts() {
         var field = new Field(5, 5);
         assertSame(((Number) field.getTile(0, 1)).getIsFirst(),false);
@@ -209,9 +232,9 @@ public class FieldTest {
         field.markTile(0,4);
         field.markTile(2,4);
         assertSame(((Number) field.getTile(0, 1)).getIsFirst(),false);
-    }*/
+    }
 
-   /* @Test
+    @Test
     public void solvedGame() {
         Field field = new Field(5, 5);
         field.markTile(4,4);
@@ -262,5 +285,5 @@ public class FieldTest {
         assertSame(field.checkConnection(1),true);
         assertSame(field.checkConnection(4),true);
         assertSame(field.getState(),GameState.SOLVED);
-    }*/
+    }
 }

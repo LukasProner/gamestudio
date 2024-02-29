@@ -74,16 +74,16 @@ public class Field {
             if(((Number) tiles[row][column]).getIsFirst()==false){
                 if (column+1 < columnCount && tiles[row][column +1].getColor().ordinal() == volueOfPrevious) {
                     tiles[row][column+1].setNextLine(tiles[row][column]);
-                    System.out.println("1* sa robi pri hodnote "+ volueOfPrevious);
+                   // System.out.println("1* sa robi pri hodnote "+ volueOfPrevious);
                 }else if (row +1 < rowCount && tiles[row+1][column].getColor().ordinal() == volueOfPrevious) {
                     tiles[row+1][column].setNextLine(tiles[row][column]);
-                    System.out.println("2* sa robi pri hodnote "+ volueOfPrevious);
+                    //System.out.println("2* sa robi pri hodnote "+ volueOfPrevious);
                 }else if (row -1 >= 0 && tiles[row-1][column].getColor().ordinal() == volueOfPrevious) {
                     tiles[row-1][column].setNextLine(tiles[row][column]);
-                    System.out.println("3* sa robi pri hodnote "+ volueOfPrevious);
+                    //System.out.println("3* sa robi pri hodnote "+ volueOfPrevious);
                 }else if (column -1 >= 0 && tiles[row][column-1].getColor().ordinal() == volueOfPrevious) {
                     tiles[row][column-1].setNextLine(tiles[row][column]);
-                    System.out.println("4* sa robi pri hodnote "+ volueOfPrevious);
+                    //System.out.println("4* sa robi pri hodnote "+ volueOfPrevious);
                 }/*else{
                     changeFisrtInNumber(volueOfPrevious);
                 }*/
@@ -113,48 +113,54 @@ public class Field {
             }
         }
         else if(tiles[row][column] instanceof Line && volueOfPrevious != 0 && volueOfPrevious!=tiles[row][column].getColor().ordinal()){//skontroluj ci je potrebne posledna podmienka
+            if(volueOfPrevious==-1){
+                volueOfPrevious = tiles[row][column].getColor().ordinal();
+                System.out.println("anio volue = " + volueOfPrevious);
+                return;
+            }
             if (row > 0 && tiles[row - 1][column].getColor().ordinal() == volueOfPrevious && !tiles[row - 1][column].hasNextLine() &&
                     (tiles[row - 1][column] instanceof Line ||  (tiles[row - 1][column] instanceof Number && ((Number) tiles[row - 1][column]).getIsFirst()))) {
                 tiles[row][column].setColor(colors[volueOfPrevious]);
-                System.out.println("--1--");
+               // System.out.println("--1--");
                 removeContinuedLines(row,column);
                 ( tiles[row - 1][column]).setNextLine(tiles[row][column]);
-                generateField();
+               // generateField();
             }
             else if (column > 0 && tiles[row][column - 1].getColor().ordinal() == volueOfPrevious && !tiles[row][column - 1].hasNextLine() &&
                     (tiles[row][column-1] instanceof Line || (tiles[row][column-1] instanceof Number && ((Number) tiles[row][column-1]).getIsFirst()))) {
                 tiles[row][column].setColor(colors[volueOfPrevious]);
-                System.out.println("--2--");
+               // System.out.println("--2--");
                 removeContinuedLines(row,column);
                 (tiles[row][column-1]).setNextLine(tiles[row][column]);
 
-                generateField();
+               // generateField();
             }
             else if (column+1 < columnCount && tiles[row][column+1].getColor().ordinal() == volueOfPrevious && !tiles[row][column+1].hasNextLine() &&
                     (tiles[row][column+1] instanceof Line|| (tiles[row][column+1] instanceof Number && ((Number) tiles[row][column+1]).getIsFirst()))) {
                 tiles[row][column].setColor(colors[volueOfPrevious]);
                 removeContinuedLines(row,column);
                 (tiles[row][column+1]).setNextLine(tiles[row][column]);
-                generateField();
+               // generateField();
             }
             else if (row+1 < rowCount && tiles[row+1][column].getColor().ordinal() == volueOfPrevious && !tiles[row+1][column].hasNextLine() &&
                     (tiles[row+1][column] instanceof Line|| (tiles[row+1][column] instanceof Number && ((Number) tiles[row+1][column]).getIsFirst()))) {
                 tiles[row][column].setColor(colors[volueOfPrevious]);
                 removeContinuedLines(row,column);
                 (tiles[row+1][column]).setNextLine(tiles[row][column]);
-                generateField();
+              //  generateField();
             }else{
-                volueOfPrevious = 0;
+                volueOfPrevious = -1;
+                System.out.println("8888888888 " + row + " "+ column);
             }
         }else if(tiles[row][column] instanceof Line && volueOfPrevious != 0 && volueOfPrevious==tiles[row][column].getColor().ordinal()){
             removeContinuedLines(row,column);
-            generateField();
-            System.out.println("KRUZNICA");
+           // generateField();
+           // System.out.println("KRUZNICA");
         }
     }
 
     private boolean checkStateOfTheGame() {
-        System.out.println("CHECKING STATE OF THE GAME");
+       // System.out.println("CHECKING STATE OF THE GAME");
         int counter = 0;
         for( int i = 0; i< pairs.length; i++){
             if(checkConnection(i+1)){
@@ -182,16 +188,16 @@ public class Field {
     }
 
     private void changeFisrtInNumber(int volueOfPrevious) {
-        System.out.println("**********************");
+      //  System.out.println("**********************");
         for (int row = 0; row<getRowCount(); row++){
             for(int column = 0; column<getColumnCount(); column++) {
                 if(tiles[row][column] instanceof Number && ((Number) tiles[row][column]).getVolue()==volueOfPrevious){
                     if(((Number) tiles[row][column]).getIsFirst()){
                         ((Number) tiles[row][column]).setFirst(false);
-                        System.out.println("last = ["+row+"]["+column+"]");
+                      //  System.out.println("last = ["+row+"]["+column+"]");
                     }else{
                         ((Number) tiles[row][column]).setFirst(true);
-                        System.out.println("first = ["+row+"]["+column+"]");
+                       // System.out.println("first = ["+row+"]["+column+"]");
                     }
                 }
             }
@@ -203,13 +209,11 @@ public class Field {
     public void removeContinuedLines(int row,int column){
         removePreviousLine(row,column);
         if((tiles[row][column]).getNextLine()!=null) {
-            System.out.println("moje terajsia kontrola ktoru hned vymazem");
             Line nextLine = (Line) (tiles[row][column]).getNextLine();
             //Line nextLine = (Line) (tiles[row][column]);
 
             while (nextLine.getNextLine() != null && nextLine.getNextLine() instanceof Line) {
                 nextLine.setColor(Colors.NULL);//nextLine.setNextLine(null);
-                System.out.println("vymayavam tieto dlazdice "+ row+" "+column);
                 Line prevline = nextLine;
                 nextLine = (Line) nextLine.getNextLine();
                 prevline.setNextLine(null);
@@ -225,24 +229,20 @@ public class Field {
         for (int i = 0; i<getRowCount(); i++){
             for(int j = 0; j<getColumnCount(); j++) {
                 if (tiles[i][j].getNextLine() ==tiles[row][column] && tiles[i][j].getColor().ordinal()!=volueOfPrevious){
-                    System.out.println("/////////////////////"+i+" "+j);
                     tiles[i][j].setNextLine(null);
                 }
             }
         }
     }
     public boolean checkConnection(int volueOfNumber){
-        //System.out.println("generujem field");
-        //generateField();
-
         for (int row = 0; row<getRowCount(); row++){
             for(int column = 0; column<getColumnCount(); column++) {
                 if(tiles[row][column] instanceof Number && ((Number) tiles[row][column]).getIsFirst() == true &&
                         tiles[row][column].getColor().ordinal() == volueOfNumber){
-                    System.out.println("row = " + row + " column = " + column);
+                   // System.out.println("row = " + row + " column = " + column);
                     Tile nextLine =  (tiles[row][column]);
                     while (nextLine.getNextLine() != null) {
-                        System.out.println("*row = " + row + " column = " + column);
+                     //   System.out.println("*row = " + row + " column = " + column);
                         nextLine =  nextLine.getNextLine();
                     }
                     //generateField();
@@ -256,7 +256,7 @@ public class Field {
     }
 
     public void removeLines(int volue){
-        System.out.println("REMOVING LINES");
+       // System.out.println("REMOVING LINES");
         for (int row = 0; row<getRowCount(); row++){
             for(int column = 0; column<getColumnCount(); column++) {
                 if(tiles[row][column] instanceof Line && tiles[row][column].getColor().ordinal() == volue){
@@ -265,7 +265,7 @@ public class Field {
                 }
             }
         }
-        generateField();
+      //  generateField();
     }
 
 

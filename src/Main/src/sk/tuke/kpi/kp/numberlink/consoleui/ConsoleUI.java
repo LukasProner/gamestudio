@@ -17,6 +17,7 @@ public class ConsoleUI {
     public void play(){
         while(true) {
             processInput();
+            field.generateField();
         }
     }
 
