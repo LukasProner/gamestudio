@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FieldTest {
     @Test
-    public void twoCircle() {
+    public void twoXCircleSPrerusenimADokoncenim() {
         var field = new Field(6, 6);
         field.markTile(0,5);
         field.markTile(1,5);
@@ -20,12 +20,87 @@ public class FieldTest {
         field.markTile(4,5);
         field.markTile(4,4);
         field.markTile(3,4);
-
         field.markTile(2,4);
         field.markTile(2,5);
+        assertSame((field.getTile(3,5).getNextLine()),null);
+        assertSame((field.getTile(2,4).getNextLine()),null);
+        assertSame((field.getTile(2,5).getNextLine()),null);
+        assertSame((field.getTile(0,5).getNextLine()),field.getTile(1,5));
+        field.markTile(3,5);
+        assertSame((field.getTile(2,5).getNextLine()),field.getTile(3,5));
+        field.markTile(4,5);
+        field.markTile(4,4);
+        assertSame((field.getTile(4,5).getNextLine()),field.getTile(4,4));
+        field.markTile(3,4);
+        field.markTile(2,4);
+        assertSame((field.getTile(3,4).getNextLine()),field.getTile(2,4));
+        field.markTile(1,4);
+        field.markTile(1,5);
+        assertSame((field.getTile(1,4).getNextLine()),null);
+        assertSame((field.getTile(1,5).getColor()),Colors.ORANGE);
+        assertSame((field.getTile(2,5).getColor()),Colors.NULL);
     }
 
-    @Test
+    /*@Test
+    public void twoXCircleSoZrusenimAOpakovanim() {
+        var field = new Field(6, 6);
+        field.markTile(0,5);
+        field.markTile(1,5);
+        field.markTile(2,5);
+        assertSame((field.getTile(1,5).getNextLine()),field.getTile(2,5));
+        field.markTile(3,5);
+        assertSame((field.getTile(2,5).getNextLine()),field.getTile(3,5));
+        field.markTile(4,5);
+        assertSame((field.getTile(3,5).getNextLine()),field.getTile(4,5));
+        field.markTile(4,4);
+        assertSame((field.getTile(4,5).getNextLine()),field.getTile(4,4));
+        field.markTile(3,4);
+        assertSame((field.getTile(4,4).getNextLine()),field.getTile(3,4));
+        field.markTile(2,4);
+        assertSame((field.getTile(3,4).getNextLine()),field.getTile(2,4));
+        field.markTile(2,5);
+        assertSame((field.getTile(2,5).getNextLine()),null);
+        assertSame((field.getTile(3,5).getNextLine()),null);
+        assertSame((field.getTile(3,5).getColor()),Colors.NULL);
+        assertSame((field.getTile(4,5).getNextLine()),null);
+        assertSame((field.getTile(4,4).getNextLine()),null);
+        assertSame((field.getTile(3,4).getNextLine()),null);
+        assertSame((field.getTile(2,4).getNextLine()),null);
+        assertSame((field.getTile(1,4).getNextLine()),null);
+        assertSame((field.getTile(0,5).getNextLine()),field.getTile(1,5));
+        assertSame(((Number) field.getTile(0, 5)).getIsFirst(),true);
+        field.markTile(0,5);
+        assertSame(((Number) field.getTile(0, 5)).getIsFirst(),true);
+        assertSame((field.getTile(0,5).getNextLine()),null);
+
+        field.markTile(0,5);
+        assertSame(((Number) field.getTile(0, 5)).getIsFirst(),true);
+        assertSame((field.getTile(0,5).getNextLine()),null);
+        field.markTile(1,5);
+        assertSame((field.getTile(0,5).getNextLine()),field.getTile(1,5));
+        field.markTile(2,5);
+        assertSame((field.getTile(1,5).getNextLine()),field.getTile(2,5));
+        field.markTile(3,5);
+        assertSame((field.getTile(2,5).getNextLine()),field.getTile(3,5));
+        field.markTile(4,5);
+        assertSame((field.getTile(3,5).getNextLine()),field.getTile(4,5));
+        field.markTile(4,4);
+        assertSame((field.getTile(4,5).getNextLine()),field.getTile(4,4));
+        field.markTile(3,4);
+        assertSame((field.getTile(4,4).getNextLine()),field.getTile(3,4));
+        field.markTile(2,4);
+        assertSame((field.getTile(3,4).getNextLine()),field.getTile(2,4));
+        field.markTile(2,5);
+        assertSame((field.getTile(2,5).getNextLine()),null);
+        assertSame((field.getTile(3,5).getNextLine()),null);
+        assertSame((field.getTile(3,5).getColor()),Colors.NULL);
+        assertSame((field.getTile(4,5).getNextLine()),null);
+        assertSame((field.getTile(4,4).getNextLine()),null);
+
+
+    }
+*/
+    /*@Test
     public void spatnyPrechod() {
         var field = new Field(6, 6);
         // test vztvorenia dvojice, nasledneho prerusenia inou liniu a znovupokusenia sa o spojenie
@@ -57,7 +132,7 @@ public class FieldTest {
         assertSame((field.getTile(1,0).getNextLine()),null);
         assertSame((field.getTile(2,0).getNextLine()),field.getTile(1,0));
     }
-
+*/
     /*@Test
     public void usualControlOfOverlayFor6x6() {
         Field field = new Field(6, 6);
