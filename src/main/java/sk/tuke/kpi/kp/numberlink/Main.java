@@ -2,19 +2,16 @@ package sk.tuke.kpi.kp.numberlink;
 
 import sk.tuke.kpi.kp.numberlink.consoleui.ConsoleUI;
 import sk.tuke.kpi.kp.numberlink.core.Field;
-import sk.tuke.kpi.kp.numberlink.core.Number;
-import sk.tuke.kpi.kp.numberlink.core.Tile;
-import sk.tuke.kpi.kp.numberlink.test.FieldTest;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-      /*  var field = new Field(6, 6);
+        var field = new Field(5, 5);
         var ui = new ConsoleUI(field);
         ui.play();
-*/
-        var field = new Field(6, 6);
+
+/*        var field = new Field(6, 6);
         field.markTile(0,2);
         field.markTile(0,3);
         field.markTile(0,4);
@@ -26,7 +23,7 @@ public class Main {
         field.markTile(3,3);
         field.markTile(3,2);
         field.generateField();
-
+*/
         //test prekryvania 2 a 4
        /* var field = new Field(6, 6);
         field.markTile(0,5);

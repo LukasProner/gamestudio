@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/src/Main/Main.iml" filepath="$PROJECT_DIR$/src/Main/Main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/gamestudio-7489.iml" filepath="$PROJECT_DIR$/.idea/gamestudio-7489.iml" />
     </modules>
   </component>

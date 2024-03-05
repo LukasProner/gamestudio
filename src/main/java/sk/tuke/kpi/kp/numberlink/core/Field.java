@@ -20,6 +20,7 @@ public class Field {
         this.pairs = new Integer[maps.getCountOfNumber(rowCount)];
         //System.out.println("pairs = " +pairs.length);
     }
+
     public void prepareField() {
         this.maps = new Maps(getRowCount(), getColumnCount());
         int[][] mapValues = maps.getMap(getRowCount());
@@ -150,7 +151,6 @@ public class Field {
               //  generateField();
             }else{
                 volueOfPrevious = -1;
-                System.out.println("8888888888 " + row + " "+ column);
             }
         }else if(tiles[row][column] instanceof Line && volueOfPrevious != 0 && volueOfPrevious==tiles[row][column].getColor().ordinal()){
             removeContinuedLines(row,column);
@@ -171,6 +171,14 @@ public class Field {
             }
         }
         if(counter == pairs.length){
+            for (int row = 0; row<getRowCount(); row++){
+                for(int column = 0; column<getColumnCount(); column++) {
+                    if(tiles[row][column].getColor() == Colors.NULL){
+                        System.out.println("NOT EVERY TILE IS COLORED");
+                        return false;
+                    }
+                }
+            }
             return true;
         }
         return false;
