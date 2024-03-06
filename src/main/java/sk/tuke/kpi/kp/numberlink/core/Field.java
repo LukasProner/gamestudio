@@ -18,7 +18,6 @@ public class Field {
         tiles = new Tile[rowCount][columnCount];
         prepareField();
         this.pairs = new Integer[maps.getCountOfNumber(rowCount)];
-        //System.out.println("pairs = " +pairs.length);
     }
 
     public void prepareField() {
@@ -48,7 +47,7 @@ public class Field {
         System.out.println();
     }
 
-    public void generateField(){
+    /*public void generateField(){
         System.out.print("___");
         for(int i = 0; i<getColumnCount(); i++) {
             System.out.print(i+1+"_");
@@ -67,9 +66,13 @@ public class Field {
             System.out.println();
         }
         System.out.println();
-    }
+    }*/
 
    public void markTile(int row, int column){
+       System.out.println("row = " + row + " column = " + column + " column count = " + columnCount);
+       if(row>=rowCount || column>=columnCount){
+           return;
+       }
         if(tiles[row][column] instanceof Number ){
             volueOfPrevious = ((Number) tiles[row][column]).getVolue();
             if(((Number) tiles[row][column]).getIsFirst()==false){

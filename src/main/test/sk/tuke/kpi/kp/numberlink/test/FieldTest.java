@@ -10,6 +10,22 @@ import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FieldTest {
+
+    @Test
+    void movementAcrossTheBorder() {
+        var field = new Field(5, 5);
+        field.markTile(0,1);
+        field.markTile(0,2);
+        field.markTile(0,3);
+        field.markTile(0,4);
+        field.markTile(0,5);
+        Assertions.assertSame((field.getTile(0,4).getNextLine()), null);
+        field.markTile(1,4);
+        Assertions.assertSame((field.getTile(0,4).getNextLine()), field.getTile(1,4));
+
+
+    }
+
     @Test
     public void gameAlmostCompletedButThereAreFreeSpaces() {
         // test na kontrolu toho ci su vsetky dlazdice po dokonceni plne ale este nemam mapu kde by sa to dalo overi
@@ -35,7 +51,7 @@ public class FieldTest {
 
         Assertions.assertSame((field.getTile(3,2).getColor()), Colors.YELLOW);
 
-        field.generateField();
+       // field.generateField();
     }
 
     @Test
