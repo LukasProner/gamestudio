@@ -257,7 +257,7 @@ public class Field {
     public void connectedNumbers(){
         for( int i = 0; i< pairs.length; i++) {
             if (checkConnection(i + 1)) {
-                System.out.print(" " + i);
+                System.out.print(" " + (i+1));
             }
         }
     }
