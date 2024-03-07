@@ -62,12 +62,16 @@ public class Field {
             }
             else if(!((Number) tiles[row][column]).getIsFirst()){
                 if (column+1 < columnCount && tiles[row][column +1].getColor().ordinal() == volueOfPrevious) {
+                    removeContinuedLines(row,column+1);
                     tiles[row][column+1].setNextLine(tiles[row][column]);
                 }else if (row +1 < rowCount && tiles[row+1][column].getColor().ordinal() == volueOfPrevious) {
+                    removeContinuedLines(row+1,column);
                     tiles[row+1][column].setNextLine(tiles[row][column]);
                 }else if (row -1 >= 0 && tiles[row-1][column].getColor().ordinal() == volueOfPrevious) {
+                    removeContinuedLines(row - 1,column);
                     tiles[row-1][column].setNextLine(tiles[row][column]);
                 }else if (column -1 >= 0 && tiles[row][column-1].getColor().ordinal() == volueOfPrevious) {
+                    removeContinuedLines(row,column-1);
                     tiles[row][column-1].setNextLine(tiles[row][column]);
                 }
 
@@ -99,6 +103,7 @@ public class Field {
             if (volueOfPrevious != tiles[row][column].getColor().ordinal()) {//skontroluj ci je potrebne posledna podmienka
                 if (volueOfPrevious == -1) {
                     volueOfPrevious = tiles[row][column].getColor().ordinal();
+                    removeContinuedLines(row,column);
                 }
                 else if (row > 0 && tiles[row - 1][column].getColor().ordinal() == volueOfPrevious && !tiles[row - 1][column].hasNextLine() &&
                         (tiles[row - 1][column] instanceof Line || (tiles[row - 1][column] instanceof Number && ((Number) tiles[row - 1][column]).getIsFirst())))
@@ -133,8 +138,12 @@ public class Field {
                     (tiles[row + 1][column]).setNextLine(tiles[row][column]);
                     //  generateField();
                 }
-                else {
+                else if(tiles[row][column].getColor() == Colors.NULL){
                     volueOfPrevious = -1;
+                }
+                else{//specialny pripad bude na to test *********************************************
+                    removeContinuedLines(row, column);
+                    volueOfPrevious = tiles[row][column].getColor().ordinal();
                 }
             } else if (volueOfPrevious == tiles[row][column].getColor().ordinal()) {
                 removeContinuedLines(row, column);
@@ -198,7 +207,7 @@ public class Field {
 
     public void removeContinuedLines(int row,int column){
         removePreviousLine(row,column);
-        if((tiles[row][column]).getNextLine()!=null) {
+        if((tiles[row][column]).getNextLine()!=null && tiles[row][column].getNextLine() instanceof Line) {
             Line nextLine = (Line) (tiles[row][column]).getNextLine();
 
             while (nextLine.getNextLine() != null && nextLine.getNextLine() instanceof Line) {
