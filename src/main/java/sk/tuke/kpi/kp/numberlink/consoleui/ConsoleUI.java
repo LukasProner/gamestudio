@@ -8,8 +8,8 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class ConsoleUI {
-    private static final Pattern INPUT_PATTERN_FOR_MOVE = Pattern.compile("([A-I])([1-9])");
-    private static final Pattern INPUT_PATTERN_FOR_FIELD_SIZE = Pattern.compile("([1-9])[*]([1-9])");
+    private static final Pattern INPUT_PATTERN_FOR_MOVE = Pattern.compile("([A-Z])([1-9][0-9]*)");
+    private static final Pattern INPUT_PATTERN_FOR_FIELD_SIZE = Pattern.compile("([1-9][0-9]*)[*]([1-9][0-9]*)");
     private Field field;
     private Scanner scanner = new Scanner(System.in);
 
@@ -83,19 +83,37 @@ public class ConsoleUI {
         }
     }
     public void show(){
-        System.out.print("___");
+        System.out.print("____");
         for(int i = 0; i<field.getColumnCount(); i++) {
-            System.out.print(i+1+"_");
+            System.out.printf("%2d", (i+1));
+
+            System.out.print("__");
         }
         System.out.println();
         for (int row = 0; row<field.getRowCount(); row++){
             System.out.print((char) ('A' + row) +"|");
             for(int column = 0; column<field.getColumnCount(); column++) {
                 if(field.getTile(row,column).getColor() == Colors.NULL/*tiles[row][column].getColor() == Colors.NULL*/){
-                    System.out.print(" _");
+                    System.out.print("   _");
                 }else{
-                    System.out.print(" ");
-                    System.out.print(field.getTile(row,column).getColor().ordinal());
+                    System.out.print("  ");
+                    switch (field.getTile(row,column).getColor()){
+                        case RED -> System.out.printf("\u001B[31m%2d\u001B[0m", field.getTile(row, column).getColor().ordinal());
+                        case GREEN ->System.out.printf("\u001B[32m%2d\u001B[0m", field.getTile(row, column).getColor().ordinal());
+                        case YELLOW ->System.out.printf("\u001B[33m%2d\u001B[0m", field.getTile(row, column).getColor().ordinal());
+                        case BLUE -> System.out.printf("\u001B[34m%2d\u001B[0m", field.getTile(row, column).getColor().ordinal());
+                        case PURPLE ->System.out.printf("\u001B[35m%2d\u001B[0m", field.getTile(row, column).getColor().ordinal());
+                        case ORANGE-> System.out.printf("\u001B[38;2;255;165;0m%2d\u001B[0m", field.getTile(row, column).getColor().ordinal());
+                        case WHITE->System.out.printf("%2d",field.getTile(row,column).getColor().ordinal());
+                        case CYAN -> System.out.printf("\u001B[36m%2d\u001B[0m", field.getTile(row, column).getColor().ordinal());
+                        case GREY -> System.out.printf("\u001B[37m%2d\u001B[0m", field.getTile(row, column).getColor().ordinal());
+                        case DARK_RED ->System.out.printf("\u001B[91m%2d\u001B[0m", field.getTile(row, column).getColor().ordinal());
+                        case PINK -> System.out.printf("\u001B[38;2;255;192;203m%2d\u001B[0m", field.getTile(row, column).getColor().ordinal());
+                        case GOLD ->System.out.printf("\u001B[38;2;255;215;0m%2d\u001B[0m", field.getTile(row, column).getColor().ordinal());
+                        case BROWN ->System.out.printf("\u001B[38;2;165;42;42m%2d\u001B[0m", field.getTile(row, column).getColor().ordinal());
+
+
+                    }
                 }
             }
             System.out.println();

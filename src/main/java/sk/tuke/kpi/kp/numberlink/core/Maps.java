@@ -106,6 +106,8 @@ public class Maps {
                 return 7;
             case 9:
                 return 8;
+            case 10:
+                return 13;
             default:
                 return 0;
         }
@@ -122,6 +124,8 @@ public class Maps {
                 return eightXeight;
             case 9:
                 return nineXnine;
+            case 10:
+                return tenXten;
             default:
                 return null;
         }
