@@ -20,17 +20,17 @@ public class ConsoleUI {
         while(field==null) {
             field = handleSizeOfField();
         }
-        while(field != null && field.getState()== GameState.PLAYING) {
+        while(field != null && field.getState() == GameState.PLAYING) {
             handleInput();
             show();
             if(field.getState() == GameState.SOLVED) {
                 System.out.println("Solved!");
             }
         }
-        System.out.println("Gratulujeme, vyhrali ste!");
         wannaPlayAgain();
     }
     private boolean wannaPlayAgain(){
+        System.out.println("Gratulujeme, vyhrali ste!");
         System.out.println("Prajete si začatie novej hry (A/N)? _");
         var input = scanner.nextLine().toUpperCase();
         if ("X".equals(input) || "N".equals(input)) {
@@ -100,6 +100,8 @@ public class ConsoleUI {
             }
             System.out.println();
         }
+        System.out.print("already connected pairs: ");
+        field.connectedNumbers();
         System.out.println();
     }
 }

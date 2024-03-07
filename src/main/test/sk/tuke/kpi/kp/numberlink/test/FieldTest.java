@@ -7,9 +7,98 @@ import sk.tuke.kpi.kp.numberlink.core.Field;
 import sk.tuke.kpi.kp.numberlink.core.Number;
 
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class FieldTest {
+
+    @Test
+    void testOfConnectionAndDisconnectionByPressingSecondOfThePair() {
+        var field = new Field(5, 5);
+        field.markTile(0,1);
+        field.markTile(0,2);
+        field.markTile(0,3);
+        field.markTile(0,4);
+        field.markTile(2,4);
+        Assertions.assertSame((field.getTile(0,1).getNextLine()), null);
+        Assertions.assertSame((field.getTile(0,2).getNextLine()), null);
+        Assertions.assertSame((field.getTile(0,2).getColor()), Colors.NULL);
+        Assertions.assertSame(((Number) field.getTile(0, 1)).getIsFirst(),false);
+        Assertions.assertSame(((Number) field.getTile(2, 4)).getIsFirst(),true);
+        field.markTile(1,4);
+        field.markTile(0,4);
+        field.markTile(0,3);
+        field.markTile(0,2);
+        Assertions.assertSame((field.getTile(1,4).getNextLine()), field.getTile(0,4));
+        Assertions.assertSame((field.getTile(0,3).getNextLine()), field.getTile(0,2));
+        field.markTile(0,1);
+        Assertions.assertSame((field.getTile(0,2).getNextLine()), field.getTile(0,1));
+        Assertions.assertSame(field.checkConnection(2),true);
+        Assertions.assertSame(((Number) field.getTile(2, 4)).getIsFirst(),true);
+        Assertions.assertSame(((Number) field.getTile(0, 1)).getIsFirst(),false);
+        Assertions.assertSame((field.getTile(0,2).getColor()), Colors.GREEN);
+        Assertions.assertSame(field.getState(),GameState.PLAYING);
+        field.markTile(0,1);
+        Assertions.assertSame(field.checkConnection(2),false);
+        Assertions.assertSame(((Number) field.getTile(2, 4)).getIsFirst(),false);
+        Assertions.assertSame(((Number) field.getTile(0, 1)).getIsFirst(),true);
+        field.markTile(1,1);
+        field.markTile(1,2);
+        field.markTile(0,2);
+        field.markTile(0,3);
+        field.markTile(0,4);
+        field.markTile(1,4);
+        field.markTile(2,4);
+        Assertions.assertSame((field.getTile(0,1).getNextLine()), field.getTile(1,1));
+        Assertions.assertSame((field.getTile(1,1).getNextLine()), field.getTile(1,2));
+        Assertions.assertSame((field.getTile(1,2).getNextLine()), field.getTile(0,2));
+        Assertions.assertSame((field.getTile(0,2).getNextLine()), field.getTile(0,3));
+        Assertions.assertSame((field.getTile(1,4).getNextLine()), field.getTile(2,4));
+        Assertions.assertSame(field.checkConnection(2),true);
+        Assertions.assertSame(((Number) field.getTile(2, 4)).getIsFirst(),false);
+        Assertions.assertSame(((Number) field.getTile(0, 1)).getIsFirst(),true);
+        field.markTile(0,1);
+        Assertions.assertSame(((Number) field.getTile(2, 4)).getIsFirst(),false);
+        Assertions.assertSame(((Number) field.getTile(0, 1)).getIsFirst(),true);
+    }
+
+    @Test
+    void TestOfTryingToMoveWithEmptyTiles() {
+        var field = new Field(5, 5);
+        field.markTile(4,0);
+        field.markTile(3,0);
+        field.markTile(2,0);
+        Assertions.assertSame((field.getTile(4,0).getNextLine()), null);
+        Assertions.assertSame((field.getTile(3,0).getNextLine()), null);
+        Assertions.assertSame((field.getTile(4,0).getColor()), Colors.NULL);
+        Assertions.assertSame((field.getTile(0,2).getColor()), Colors.NULL);
+        field.markTile(4,1);
+        field.markTile(4,0);
+        field.markTile(3,0);
+        field.markTile(2,0);
+        Assertions.assertSame((field.getTile(4,1).getNextLine()), field.getTile(4,0));
+        Assertions.assertSame((field.getTile(3,0).getNextLine()), field.getTile(2,0));
+        Assertions.assertSame((field.getTile(4,0).getColor()), Colors.YELLOW);
+        Assertions.assertSame((field.getTile(2,0).getColor()), Colors.YELLOW);
+
+    }
+
+    @Test
+    void smallCircle() {
+        var field = new Field(5, 5);
+        field.markTile(0,1);
+        field.markTile(0,2);
+        field.markTile(1,2);
+        field.markTile(1,1);
+        field.markTile(0,1);
+        Assertions.assertSame((field.getTile(0,1).getNextLine()), null);
+        Assertions.assertSame((field.getTile(0,2).getNextLine()), null);
+        Assertions.assertSame((field.getTile(1,2).getNextLine()), null);
+        Assertions.assertSame((field.getTile(1,1).getNextLine()), null);
+        Assertions.assertSame((field.getTile(0,1).getColor()), Colors.GREEN);
+        Assertions.assertSame((field.getTile(0,2).getColor()), Colors.NULL);
+        Assertions.assertSame((field.getTile(1,2).getColor()), Colors.NULL);
+        Assertions.assertSame((field.getTile(1,1).getColor()), Colors.NULL);
+        field.markTile(0,1);
+    }
 
     @Test
     void movementAcrossTheBorder() {
@@ -213,7 +302,7 @@ public class FieldTest {
     }
 
     @Test
-    public void SpacielCaseOfChangingPositions() {
+    public void SpecialCaseOfChangingPositions() {
         var field = new Field(6,6);
         field.markTile(0,0);
         field.markTile(1,0);
@@ -231,7 +320,7 @@ public class FieldTest {
         Assertions.assertSame(((Number) field.getTile(1, 3)).getIsFirst(),false);
         field.markTile(1,3);
         field.markTile(1,4);//neprechadza to ale to je asi fajn
-        Assertions.assertSame(((Number) field.getTile(0, 1)).getIsFirst(),true);
+        Assertions.assertSame(((Number) field.getTile(0, 1)).getIsFirst(),false);
         field.markTile(0,1);
         Assertions.assertSame(((Number) field.getTile(0, 1)).getIsFirst(),true);
         field.markTile(1,1);
