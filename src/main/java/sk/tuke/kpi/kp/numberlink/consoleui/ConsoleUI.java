@@ -27,7 +27,9 @@ public class ConsoleUI {
                 System.out.println("Solved!");
             }
         }
-        wannaPlayAgain();
+        if(wannaPlayAgain()){
+            //play();
+        }
     }
     private boolean wannaPlayAgain(){
         System.out.println("Gratulujeme, vyhrali ste!");

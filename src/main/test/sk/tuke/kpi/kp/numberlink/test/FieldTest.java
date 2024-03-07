@@ -10,6 +10,43 @@ import org.junit.jupiter.api.Assertions;
 
 public class FieldTest {
     @Test
+    void testOfRemovingPreviousLines() {
+        var field = new Field(10, 10);
+        field.markTile(0, 6);//2
+        field.markTile(0, 7);
+        field.markTile(0, 8);
+        field.markTile(0, 9);
+        field.markTile(1, 6);//4
+        field.markTile(1, 7);
+        field.markTile(1, 8);
+        field.markTile(1, 9);
+        Assertions.assertSame(field.checkConnection(2), true);
+        Assertions.assertSame(field.checkConnection(4), true);
+        field.markTile(0, 7);
+        Assertions.assertSame(field.checkConnection(2), false);
+        Assertions.assertSame((field.getTile(0, 7).getNextLine()),null);
+        field.markTile(1, 7);
+        Assertions.assertSame(field.checkConnection(4), false);
+        field.markTile(2, 7);
+        field.markTile(1, 6);//4
+        field.markTile(1, 7);
+        field.markTile(1, 8);
+        field.markTile(1, 9);
+        Assertions.assertSame((field.getTile(0, 7).getNextLine()),null);
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    @Test
     void gameOfTebByTen() {
         var field = new Field(10, 10);
         field.markTile(7, 9);
