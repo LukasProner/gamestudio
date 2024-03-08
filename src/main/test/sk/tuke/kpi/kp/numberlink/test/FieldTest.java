@@ -21,23 +21,17 @@ public class FieldTest {
         field.markTile(2, 3);
         field.markTile(1, 0);
         Assertions.assertSame((field.getTile(1, 0).getNextLine()),null);
-
         field.markTile(2, 1);
         Assertions.assertSame((field.getVolueOfPrevious()),-1);
-
         field.markTile(2, 0);
         Assertions.assertSame((field.getTile(2, 1).getNextLine()),null);
         Assertions.assertSame((field.getVolueOfPrevious()),-1);
         field.markTile(1, 0);
-
         field.markTile(2, 0);
         field.markTile(2, 1);
         Assertions.assertSame((field.getTile(2, 0).getNextLine()),field.getTile(2, 1));
-
         field.markTile(2, 2);
         Assertions.assertSame((field.getTile(2, 0).getColor()),Colors.RED);
-
-
     }
 
     @Test
@@ -64,17 +58,6 @@ public class FieldTest {
         field.markTile(1, 8);
         field.markTile(1, 9);
         Assertions.assertSame((field.getTile(0, 7).getNextLine()),null);
-
-
-
-
-
-
-
-
-
-
-
     }
 
     @Test
