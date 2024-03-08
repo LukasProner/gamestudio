@@ -21,9 +21,10 @@ public class ConsoleUI {
             field = handleSizeOfField();
         }
         while(field != null && field.getState() == GameState.PLAYING) {
-            handleInput();
             show();
+            handleInput();
             if(field.getState() == GameState.SOLVED) {
+                show();
                 System.out.println("Solved!");
             }
         }

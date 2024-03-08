@@ -24,28 +24,28 @@ public class Field {
     public void prepareField() {
         this.maps = new Maps(getRowCount(), getColumnCount());
         int[][] mapValues = maps.getMap(getRowCount());
-        System.out.print("  _");
-        for (int i = 0; i < getColumnCount(); i++) {
-            System.out.print(i + 1 + "_");
-        }
-        System.out.println();
+       // System.out.print("  _");
+       // for (int i = 0; i < getColumnCount(); i++) {
+          //  System.out.print(i + 1 + "_");
+       // }
+      //  System.out.println();
         for (int row = 0; row < getRowCount(); row++) {
-            System.out.print((char) ('A' + row) +"|");
+          //  System.out.print((char) ('A' + row) +"|");
             for (int column = 0; column < getColumnCount(); column++) {
                 if (mapValues[row][column] == 0) {
                     tiles[row][column] = new Line();
                     tiles[row][column].setColor(Colors.NULL);
-                    System.out.print(" _");
+                    //System.out.print(" _");
                 } else {
-                    System.out.print(" ");
+                   // System.out.print(" ");
                     tiles[row][column] = new Number(mapValues[row][column]);
                     tiles[row][column].setColor(colors[mapValues[row][column]]);
-                    System.out.print(((Number) tiles[row][column]).getVolue());
+                   // System.out.print(((Number) tiles[row][column]).getVolue());
                 }
             }
-            System.out.println(" |");
+          //  System.out.println(" |");
         }
-        System.out.println();
+      //  System.out.println();
     }
 
     public void markTile(int row, int column) {
@@ -55,7 +55,6 @@ public class Field {
         if (tiles[row][column] instanceof Number) {
             volueOfPrevious = ((Number) tiles[row][column]).getVolue();
             if (checkConnection(volueOfPrevious)) {
-                System.out.println("preco ako?" + volueOfPrevious );
                 removeLines(volueOfPrevious);
                 if (!((Number) tiles[row][column]).getIsFirst()) {
                     changeFisrtInNumber(volueOfPrevious);
@@ -75,38 +74,30 @@ public class Field {
 
     private void connectLineWithLine(int row, int column) {
         if (volueOfPrevious != tiles[row][column].getColor().ordinal()) {//skontroluj ci je potrebne posledna podmienka
-            if (volueOfPrevious == -1) {
+            if (volueOfPrevious == -1 && tiles[row][column].getColor()!=Colors.NULL) {
                 volueOfPrevious = tiles[row][column].getColor().ordinal();
                 removeContinuedLines(row, column);
 
             } else if (row > 0 && tiles[row - 1][column].getColor().ordinal() == volueOfPrevious && !tiles[row - 1][column].hasNextLine() &&
                     (tiles[row - 1][column] instanceof Line || (tiles[row - 1][column] instanceof Number && ((Number) tiles[row - 1][column]).getIsFirst()))) {
-                tiles[row][column].setColor(colors[volueOfPrevious]);
-                removeContinuedLines(row, column);
-                removePreviousLine(row,column);
+                changeStateOfTile(row, column);
                 (tiles[row - 1][column]).setNextLine(tiles[row][column]);
 
             } else if (column > 0 && tiles[row][column - 1].getColor().ordinal() == volueOfPrevious && !tiles[row][column - 1].hasNextLine() &&
                     (tiles[row][column - 1] instanceof Line || (tiles[row][column - 1] instanceof Number && ((Number) tiles[row][column - 1]).getIsFirst()))) {
-                tiles[row][column].setColor(colors[volueOfPrevious]);
-                removeContinuedLines(row, column);
-                removePreviousLine(row,column);
+                changeStateOfTile(row, column);
 
                 (tiles[row][column - 1]).setNextLine(tiles[row][column]);
 
             } else if (column + 1 < columnCount && tiles[row][column + 1].getColor().ordinal() == volueOfPrevious && !tiles[row][column + 1].hasNextLine() &&
                     (tiles[row][column + 1] instanceof Line || (tiles[row][column + 1] instanceof Number && ((Number) tiles[row][column + 1]).getIsFirst()))) {
-                tiles[row][column].setColor(colors[volueOfPrevious]);
-                removeContinuedLines(row, column);
-                removePreviousLine(row,column);
+                changeStateOfTile(row, column);
 
                 (tiles[row][column + 1]).setNextLine(tiles[row][column]);
 
             } else if (row + 1 < rowCount && tiles[row + 1][column].getColor().ordinal() == volueOfPrevious && !tiles[row + 1][column].hasNextLine() &&
                     (tiles[row + 1][column] instanceof Line || (tiles[row + 1][column] instanceof Number && ((Number) tiles[row + 1][column]).getIsFirst()))) {
-                tiles[row][column].setColor(colors[volueOfPrevious]);
-                removeContinuedLines(row, column);
-                removePreviousLine(row,column);
+                changeStateOfTile(row, column);
                 (tiles[row + 1][column]).setNextLine(tiles[row][column]);
 
             } else if (tiles[row][column].getColor() == Colors.NULL) {
@@ -121,6 +112,12 @@ public class Field {
             removePreviousLine(row,column);
             removeContinuedLines(row, column);
         }
+    }
+
+    private void changeStateOfTile(int row, int column) {
+        tiles[row][column].setColor(colors[volueOfPrevious]);
+        removeContinuedLines(row, column);
+        removePreviousLine(row, column);
     }
 
     private void writeGameState(int row, int column) {

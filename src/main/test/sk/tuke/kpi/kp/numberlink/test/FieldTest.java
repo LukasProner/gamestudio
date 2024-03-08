@@ -9,6 +9,37 @@ import sk.tuke.kpi.kp.numberlink.core.Number;
 import org.junit.jupiter.api.Assertions;
 
 public class FieldTest {
+
+    @Test
+    void foundMistakeButNowIDontKnowWhy() {
+        var field = new Field(7, 7);
+        field.markTile(0, 0);
+        field.markTile(1, 0);
+        field.markTile(2, 0);
+        field.markTile(2, 1);
+        field.markTile(2, 2);
+        field.markTile(2, 3);
+        field.markTile(1, 0);
+        Assertions.assertSame((field.getTile(1, 0).getNextLine()),null);
+
+        field.markTile(2, 1);
+        Assertions.assertSame((field.getVolueOfPrevious()),-1);
+
+        field.markTile(2, 0);
+        Assertions.assertSame((field.getTile(2, 1).getNextLine()),null);
+        Assertions.assertSame((field.getVolueOfPrevious()),-1);
+        field.markTile(1, 0);
+
+        field.markTile(2, 0);
+        field.markTile(2, 1);
+        Assertions.assertSame((field.getTile(2, 0).getNextLine()),field.getTile(2, 1));
+
+        field.markTile(2, 2);
+        Assertions.assertSame((field.getTile(2, 0).getColor()),Colors.RED);
+
+
+    }
+
     @Test
     void testOfRemovingPreviousLines() {
         var field = new Field(10, 10);
