@@ -7,7 +7,11 @@ public class TimerOfGame extends TimerTask {
     @Override
     public void run() {
         time++;
-        System.out.print("Uplynulo sekúnd: " + time + "\r"); // Použitie '\r' pre vynulovanie riadku pred výpisom
-        System.out.flush();
+        //System.out.print("\rtime : " + time + ",Enter command (X - exit, A0 - mark tile):");
+        //System.out.flush();
+    }
+
+    public int getTime() {
+        return time;
     }
 }

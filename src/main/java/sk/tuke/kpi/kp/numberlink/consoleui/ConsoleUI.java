@@ -17,23 +17,26 @@ public class ConsoleUI {
     private Field field;
     private Scanner scanner = new Scanner(System.in);
     private Timer timer;
+    private TimerOfGame timerOfGame;
     private ScoreService scoreService = new ScoreServiceJDBC();
 
     public ConsoleUI() {
         this.timer = new Timer();
+        this.timerOfGame = new TimerOfGame();
 
     }
     public void play(){
         while(field==null) {
             field = handleSizeOfField();
         }
+        timer.schedule(timerOfGame,0,1000);
         while(field != null && field.getState() == GameState.PLAYING) {
             show();
+            System.out.println("timer je " + timerOfGame.getTime());
             handleInput();
-            timer.schedule(new TimerOfGame(),0,1000);
-
             if(field.getState() == GameState.SOLVED) {
                 show();
+                timer.cancel();
                 System.out.println("Solved!");
             }
         }
@@ -43,6 +46,7 @@ public class ConsoleUI {
     }
     private boolean wannaPlayAgain(){
         System.out.println("Gratulujeme, vyhrali ste!");
+        System.out.println("Your time was " + timerOfGame.getTime() );
         System.out.println("Prajete si začatie novej hry (A/N)? _");
         var input = scanner.nextLine().toUpperCase();
         if ("X".equals(input) || "N".equals(input)) {
@@ -80,6 +84,7 @@ public class ConsoleUI {
         System.out.print("Enter command (X - exit, A0 - mark tile): ");
         var line = scanner.nextLine().toUpperCase();
         if("X".equals(line)){
+            timer.cancel();
             System.out.println("have a nice day");
             System.exit(0);
         }
