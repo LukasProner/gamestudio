@@ -3,8 +3,12 @@ package sk.tuke.kpi.kp.numberlink.consoleui;
 import sk.tuke.kpi.kp.numberlink.core.Colors;
 import sk.tuke.kpi.kp.numberlink.core.GameState;
 import sk.tuke.kpi.kp.numberlink.core.Field;
+import sk.tuke.kpi.kp.numberlink.core.TimerOfGame;
+import sk.tuke.kpi.kp.numberlink.service.ScoreService;
+import sk.tuke.kpi.kp.numberlink.service.ScoreServiceJDBC;
 
 import java.util.Scanner;
+import java.util.Timer;
 import java.util.regex.Pattern;
 
 public class ConsoleUI {
@@ -12,10 +16,13 @@ public class ConsoleUI {
     private static final Pattern INPUT_PATTERN_FOR_FIELD_SIZE = Pattern.compile("([1-9][0-9]*)[*]([1-9][0-9]*)");
     private Field field;
     private Scanner scanner = new Scanner(System.in);
+    private Timer timer;
+    private ScoreService scoreService = new ScoreServiceJDBC();
 
-    /*public ConsoleUI(Field field) {
-        this.field = field;
-    }*/
+    public ConsoleUI() {
+        this.timer = new Timer();
+
+    }
     public void play(){
         while(field==null) {
             field = handleSizeOfField();
@@ -23,6 +30,8 @@ public class ConsoleUI {
         while(field != null && field.getState() == GameState.PLAYING) {
             show();
             handleInput();
+            timer.schedule(new TimerOfGame(),0,1000);
+
             if(field.getState() == GameState.SOLVED) {
                 show();
                 System.out.println("Solved!");
@@ -45,6 +54,7 @@ public class ConsoleUI {
         return false;
     }
     private Field handleSizeOfField(){
+        printScore();
         System.out.print("Enter size of field (X - exit, 5*5 - size of field): ");
         var sizeInput = scanner.nextLine().toUpperCase();
         if ("X".equals(sizeInput)) {
@@ -124,5 +134,14 @@ public class ConsoleUI {
         System.out.print("already connected pairs: ");
         field.connectedNumbers();
         System.out.println();
+    }
+
+    private void printScore(){
+        var scores = scoreService.getTopScores("mines");
+        for(int i=0; i<scores.size();i++){
+            var score = scores.get(i);
+            System.out.printf("%d %s %d\n",(i+1),score.getPlayer(),score.getPoints());
+        }
+        System.out.println("--------------------------------------------------");
     }
 }
