@@ -9,7 +9,10 @@ public class Maps {
         this.rowCount = rowCount;
         this.columnCount = columnCount;
     }
-
+    private int [][] trainy = {
+            {1,0},
+            {1,0},
+    };
     private int[][] fiveXfive = {
             {1, 2, 0, 0, 0},
             {0, 0, 0, 0, 0},
@@ -80,20 +83,6 @@ public class Maps {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     };
-    /*public int getCountOfNumber(int size){
-        if(size == 5){
-            return 4;
-        }else if(size == 6){
-            return 5;
-        }else if(size == 7){
-            return 6;
-        }else if(size == 8){
-            return 7;
-        }else if(size == 9){
-            return 8;
-        }
-        return 0;
-    }*/
     public int getCountOfNumber(int size) {
         switch (size) {
             case 5:
@@ -108,6 +97,8 @@ public class Maps {
                 return 8;
             case 10:
                 return 13;
+            case 2:
+                return 1;
             default:
                 return 0;
         }
@@ -126,6 +117,8 @@ public class Maps {
                 return nineXnine;
             case 10:
                 return tenXten;
+            case 2:
+                return trainy;
             default:
                 return null;
         }

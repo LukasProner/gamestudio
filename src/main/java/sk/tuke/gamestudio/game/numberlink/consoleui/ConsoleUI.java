@@ -1,5 +1,6 @@
 package sk.tuke.gamestudio.game.numberlink.consoleui;
 
+import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.numberlink.core.Colors;
 import sk.tuke.gamestudio.game.numberlink.core.GameState;
 import sk.tuke.gamestudio.game.numberlink.core.Field;
@@ -7,6 +8,8 @@ import sk.tuke.gamestudio.game.numberlink.core.TimerOfGame;
 import sk.tuke.gamestudio.service.ScoreService;
 import sk.tuke.gamestudio.service.ScoreServiceJDBC;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.regex.Pattern;
@@ -39,17 +42,18 @@ public class ConsoleUI {
             if (field.getState() == GameState.SOLVED) {
                 show();
                 timer.cancel();
+                scoreService.addScore( new Score("numberlink",System.getProperty("user.name"), timerOfGame.getTime()*100/field.getColumnCount(),new Date()));
                 System.out.println("Solved!");
             }
         }
         if (wannaPlayAgain()) {
-            //play();
+            play();
         }
     }
 
     private boolean wannaPlayAgain() {
         System.out.println("Gratulujeme, vyhrali ste!");
-        System.out.println("Your time was " + timerOfGame.getTime());
+        System.out.println("Your time was: " + timerOfGame.getTime() + ",and your score was: " + timerOfGame.getTime()*100/field.getColumnCount() );
         System.out.println("Prajete si začatie novej hry (A/N)? _");
         var input = scanner.nextLine().toUpperCase();
         if ("X".equals(input) || "N".equals(input)) {
@@ -163,7 +167,7 @@ public class ConsoleUI {
     }
 
     private void printScore() {
-        var scores = scoreService.getTopScores("mines");
+        var scores = scoreService.getTopScores("numberlink");
         for (int i = 0; i < scores.size(); i++) {
             var score = scores.get(i);
             System.out.printf("%d %s %d\n", (i + 1), score.getPlayer(), score.getPoints());
