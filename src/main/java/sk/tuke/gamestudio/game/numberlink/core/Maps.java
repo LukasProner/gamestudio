@@ -10,8 +10,9 @@ public class Maps {
         this.columnCount = columnCount;
     }
     private int [][] trainy = {
-            {1,0},
-            {1,0},
+            {1,0,0},
+            {0,0,0},
+            {1,0,0},
     };
     private int[][] fiveXfive = {
             {1, 2, 0, 0, 0},
@@ -117,7 +118,7 @@ public class Maps {
                 return nineXnine;
             case 10:
                 return tenXten;
-            case 2:
+            case 3:
                 return trainy;
             default:
                 return null;

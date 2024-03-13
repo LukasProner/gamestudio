@@ -1,10 +1,13 @@
 package sk.tuke.gamestudio.game.numberlink.consoleui;
 
+import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.numberlink.core.Colors;
 import sk.tuke.gamestudio.game.numberlink.core.GameState;
 import sk.tuke.gamestudio.game.numberlink.core.Field;
 import sk.tuke.gamestudio.game.numberlink.core.TimerOfGame;
+import sk.tuke.gamestudio.service.CommentService;
+import sk.tuke.gamestudio.service.CommentServiceJDBC;
 import sk.tuke.gamestudio.service.ScoreService;
 import sk.tuke.gamestudio.service.ScoreServiceJDBC;
 
@@ -22,10 +25,9 @@ public class ConsoleUI {
     private Timer timer;
     private TimerOfGame timerOfGame;
     private ScoreService scoreService = new ScoreServiceJDBC();
+    private CommentService commentService = new CommentServiceJDBC();
 
     public ConsoleUI() {
-        this.timer = new Timer();
-        //this.timerOfGame = new TimerOfGame();
 
     }
 
@@ -34,8 +36,9 @@ public class ConsoleUI {
             field = handleSizeOfField();
         }
         this.timerOfGame = new TimerOfGame(field);
+        this.timer = new Timer();
         timer.schedule(timerOfGame, 0, 1000);
-        while (field != null && field.getState() != GameState.SOLVED) {
+        while (field != null/* && field.getState() != GameState.SOLVED*/) {
             show();
             System.out.println("time: " + timerOfGame.getTime());
             handleInput();
@@ -44,16 +47,29 @@ public class ConsoleUI {
                 timer.cancel();
                 scoreService.addScore( new Score("numberlink",System.getProperty("user.name"), timerOfGame.getTime()*100/field.getColumnCount(),new Date()));
                 System.out.println("Solved!");
+                wannaAddComment();
+                break;
             }
         }
         if (wannaPlayAgain()) {
+            field = null;
             play();
+        }
+    }
+
+    private void wannaAddComment() {
+        System.out.print("Do you want to add some comment?(A/N): ");
+        var sizeInput = scanner.nextLine().toUpperCase();
+        if ("A".equals(sizeInput)) {
+            System.out.println(" Comment :");
+            String comment = scanner.nextLine();
+            commentService.addComment(new Comment("numberlink",System.getProperty("user.name"), comment,new Date()));
         }
     }
 
     private boolean wannaPlayAgain() {
         System.out.println("Gratulujeme, vyhrali ste!");
-        System.out.println("Your time was: " + timerOfGame.getTime() + ",and your score was: " + timerOfGame.getTime()*100/field.getColumnCount() );
+        System.out.println("Your time was: " + timerOfGame.getTime() + "seconds and your score was: " + timerOfGame.getTime()*100/field.getColumnCount() );
         System.out.println("Prajete si začatie novej hry (A/N)? _");
         var input = scanner.nextLine().toUpperCase();
         if ("X".equals(input) || "N".equals(input)) {
@@ -103,12 +119,13 @@ public class ConsoleUI {
         }
         var matcher = INPUT_PATTERN_FOR_MOVE.matcher(line);
         if (matcher.matches()) {
+            System.out.println("state = " +field.getState());
             field.setState(GameState.PLAYING);
             System.out.println(matcher.group(1) + " " + matcher.group(2));
             int row = matcher.group(1).charAt(0) - 'A';
             int column = Integer.parseInt(matcher.group(2)) - 1;
             field.markTile(row, column);
-
+            System.out.println("field state = " + field.getState());
         } else {
             System.out.println("  wrong input");
         }
