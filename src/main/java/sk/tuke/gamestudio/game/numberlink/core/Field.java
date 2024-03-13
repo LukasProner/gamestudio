@@ -124,15 +124,13 @@ public class Field {
 
     private void writeGameState(int row, int column) {
         if (checkConnection(((Number) tiles[row][column]).getVolue())) {
-            System.out.println("ano je to par");
             if (checkStateOfTheGame()) {
                 System.out.println("GAME OVER");
                 state = GameState.SOLVED;
             } else {
-                System.out.println("THE GAME IS NOT OVER YER");
+             //   System.out.println("THE GAME IS NOT OVER YER");
             }
         } else {
-            System.out.println("nie nie je to par pre hodnotu " + volueOfPrevious);
             if (!isThereFisrtOfNumber(volueOfPrevious)) {
                 ((Number) tiles[row][column]).setFirst(true);
             } else {

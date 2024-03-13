@@ -61,18 +61,19 @@ public class ConsoleUI {
         System.out.print("Do you want to add some comment?(A/N): ");
         var sizeInput = scanner.nextLine().toUpperCase();
         if ("A".equals(sizeInput)) {
-            System.out.println(" Comment :");
+            System.out.print(" Comment :");
             String comment = scanner.nextLine();
             commentService.addComment(new Comment("numberlink",System.getProperty("user.name"), comment,new Date()));
         }
     }
 
     private boolean wannaPlayAgain() {
-        System.out.println("Gratulujeme, vyhrali ste!");
-        System.out.println("Your time was: " + timerOfGame.getTime() + "seconds and your score was: " + timerOfGame.getTime()*100/field.getColumnCount() );
-        System.out.println("Prajete si začatie novej hry (A/N)? _");
+        System.out.println("Congratulations, you've won!");
+        System.out.println("Your time was: " + timerOfGame.getTime() + " seconds and your score was: " + timerOfGame.getTime()*100/field.getColumnCount() );
+        System.out.println("Do you wish to start a new game? (A/N): ");
         var input = scanner.nextLine().toUpperCase();
         if ("X".equals(input) || "N".equals(input)) {
+            System.out.println(field.getState());
             System.out.println("Have a nice day");
             System.exit(0);
         } else if ("A".equals(input)) {
@@ -87,7 +88,8 @@ public class ConsoleUI {
         var sizeInput = scanner.nextLine().toUpperCase();
         if ("X".equals(sizeInput)) {
             System.out.println("Have a nice day");
-            timer.cancel();
+            if(timer!=null)
+                timer.cancel();
             System.exit(0);
         }
         var sizeMatcher = INPUT_PATTERN_FOR_FIELD_SIZE.matcher(sizeInput);
@@ -119,19 +121,18 @@ public class ConsoleUI {
         }
         var matcher = INPUT_PATTERN_FOR_MOVE.matcher(line);
         if (matcher.matches()) {
-            System.out.println("state = " +field.getState());
             field.setState(GameState.PLAYING);
-            System.out.println(matcher.group(1) + " " + matcher.group(2));
+            //System.out.println(matcher.group(1) + " " + matcher.group(2));
             int row = matcher.group(1).charAt(0) - 'A';
             int column = Integer.parseInt(matcher.group(2)) - 1;
             field.markTile(row, column);
-            System.out.println("field state = " + field.getState());
         } else {
             System.out.println("  wrong input");
         }
     }
 
     public void show() {
+        System.out.println("\n\n\n");
         printFirstLine();
         for (int row = 0; row < field.getRowCount(); row++) {
             System.out.print((char) ('A' + row) + "|");
