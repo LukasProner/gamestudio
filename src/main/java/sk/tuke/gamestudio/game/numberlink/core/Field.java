@@ -49,7 +49,7 @@ public class Field {
             if (checkConnection(volueOfPrevious)) {
                 removeLines(volueOfPrevious);
                 if (!((Number) tiles[row][column]).getIsFirst()) {
-                    changeFisrtInNumber(volueOfPrevious);
+                    changeFirstInNumber(volueOfPrevious);
                 }
             } else if (!((Number) tiles[row][column]).getIsFirst()) {
                 connectLinesWithNumber(row, column);
@@ -124,7 +124,7 @@ public class Field {
             if (!isThereFirstOfNumber(volueOfPrevious)) {
                 ((Number) tiles[row][column]).setFirst(true);
             } else {
-                changeFisrtInNumber(volueOfPrevious);
+                changeFirstInNumber(volueOfPrevious);
             }
         }
     }
@@ -179,7 +179,7 @@ public class Field {
         return false;
     }
 
-    private void changeFisrtInNumber(int volueOfPrevious) {
+    private void changeFirstInNumber(int volueOfPrevious) {
         for (int row = 0; row < getRowCount(); row++) {
             for (int column = 0; column < getColumnCount(); column++) {
                 if (tiles[row][column] instanceof Number && ((Number) tiles[row][column]).getVolue() == volueOfPrevious) {

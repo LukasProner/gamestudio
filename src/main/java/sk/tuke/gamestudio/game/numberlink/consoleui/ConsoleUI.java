@@ -45,7 +45,7 @@ public class ConsoleUI {
             if (field.getState() == GameState.SOLVED) {
                 show();
                 timer.cancel();
-                scoreService.addScore( new Score("numberlink",System.getProperty("user.name"), timerOfGame.getTime()*100/field.getColumnCount(),new Date()));
+                scoreService.addScore( new Score("numberlink",System.getProperty("user.name"), timerOfGame.getTime()*100/(field.getColumnCount()*2),new Date()));
                 System.out.println("Solved!");
                 wannaAddComment();
                 break;
@@ -69,7 +69,7 @@ public class ConsoleUI {
 
     private boolean wannaPlayAgain() {
         System.out.println("Congratulations, you've won!");
-        System.out.println("Your time was: " + timerOfGame.getTime() + " seconds and your score was: " + timerOfGame.getTime()*100/field.getColumnCount() );
+        System.out.println("Your time was: " + timerOfGame.getTime() + " seconds and your score was: " + timerOfGame.getTime()*100/(field.getColumnCount()*2) );
         System.out.println("Do you wish to start a new game? (A/N): ");
         var input = scanner.nextLine().toUpperCase();
         if ("X".equals(input) || "N".equals(input)) {
@@ -109,17 +109,18 @@ public class ConsoleUI {
     private void handleInput() {
         System.out.print("Enter command (X - exit,P - pause, A0 - mark tile): ");
         var line = scanner.nextLine().toUpperCase();
+        var matcher = INPUT_PATTERN_FOR_MOVE.matcher(line);
+
         if ("X".equals(line)) {
             timer.cancel();
             System.out.println("  Have a nice day");
             System.exit(0);
         }
-        if("P".equals(line)){
+        else if("P".equals(line)){
            field.setState(GameState.PAUSED);
             System.out.println("PAUSED AT : " + timerOfGame.getTime());
         }
-        var matcher = INPUT_PATTERN_FOR_MOVE.matcher(line);
-        if (matcher.matches()) {
+        else if (matcher.matches()) {
             field.setState(GameState.PLAYING);
             int row = matcher.group(1).charAt(0) - 'A';
             int column = Integer.parseInt(matcher.group(2)) - 1;
