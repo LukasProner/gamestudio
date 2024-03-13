@@ -487,7 +487,6 @@ public class FieldTest {
         Assertions.assertSame(field.checkConnection(1), true);
         Assertions.assertSame(field.checkConnection(4), true);
         Assertions.assertSame(field.getState(), GameState.PLAYING);
-
         //3
         field.markTile(2, 2);
         field.markTile(2, 1);

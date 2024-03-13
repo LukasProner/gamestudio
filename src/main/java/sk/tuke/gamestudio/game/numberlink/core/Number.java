@@ -11,10 +11,6 @@ public class Number extends Tile{
         this.setLast(false);
     }
 
-    public boolean getIsLast() {
-        return isLast;
-    }
-
     public void setLast(boolean last) {
         isLast = last;
     }

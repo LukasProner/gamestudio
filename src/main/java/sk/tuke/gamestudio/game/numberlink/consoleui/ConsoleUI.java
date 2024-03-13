@@ -38,7 +38,7 @@ public class ConsoleUI {
         this.timerOfGame = new TimerOfGame(field);
         this.timer = new Timer();
         timer.schedule(timerOfGame, 0, 1000);
-        while (field != null/* && field.getState() != GameState.SOLVED*/) {
+        while (field != null) {
             show();
             System.out.println("time: " + timerOfGame.getTime());
             handleInput();
@@ -61,7 +61,7 @@ public class ConsoleUI {
         System.out.print("Do you want to add some comment?(A/N): ");
         var sizeInput = scanner.nextLine().toUpperCase();
         if ("A".equals(sizeInput)) {
-            System.out.print(" Comment :");
+            System.out.print(" Comment: ");
             String comment = scanner.nextLine();
             commentService.addComment(new Comment("numberlink",System.getProperty("user.name"), comment,new Date()));
         }
@@ -73,7 +73,6 @@ public class ConsoleUI {
         System.out.println("Do you wish to start a new game? (A/N): ");
         var input = scanner.nextLine().toUpperCase();
         if ("X".equals(input) || "N".equals(input)) {
-            System.out.println(field.getState());
             System.out.println("Have a nice day");
             System.exit(0);
         } else if ("A".equals(input)) {
@@ -122,7 +121,6 @@ public class ConsoleUI {
         var matcher = INPUT_PATTERN_FOR_MOVE.matcher(line);
         if (matcher.matches()) {
             field.setState(GameState.PLAYING);
-            //System.out.println(matcher.group(1) + " " + matcher.group(2));
             int row = matcher.group(1).charAt(0) - 'A';
             int column = Integer.parseInt(matcher.group(2)) - 1;
             field.markTile(row, column);
@@ -132,7 +130,7 @@ public class ConsoleUI {
     }
 
     public void show() {
-        System.out.println("\n\n\n");
+        System.out.println("\n\n");
         printFirstLine();
         for (int row = 0; row < field.getRowCount(); row++) {
             System.out.print((char) ('A' + row) + "|");

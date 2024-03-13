@@ -8,9 +8,9 @@ public abstract class Tile {
 
     public boolean hasNextLine() {
         if(getNextLine()!=null){
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public void setColor(Colors color) {

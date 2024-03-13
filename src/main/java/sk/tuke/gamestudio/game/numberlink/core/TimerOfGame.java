@@ -4,7 +4,7 @@ import java.util.TimerTask;
 
 public class TimerOfGame extends TimerTask {
     private int time = 0;
-    private Field field;
+    private final Field field;
 
     public TimerOfGame(Field field) {
         this.field = field;
