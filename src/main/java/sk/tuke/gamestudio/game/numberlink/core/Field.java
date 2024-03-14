@@ -8,7 +8,7 @@ public class Field {
     private final Integer[] pairs;
     private int volueOfPrevious = 0;
     private GameState state;
-    private Colors[] colors = Colors.values(); //to convert a number to a color
+    private final Colors[] colors = Colors.values(); //to convert a number to a color
 
     public Field(int rowCount, int columnCount) {
         if (rowCount != columnCount) {
@@ -179,10 +179,10 @@ public class Field {
         return false;
     }
 
-    private void changeFirstInNumber(int volueOfPrevious) {
+    private void changeFirstInNumber(int valueOfPrevious) {
         for (int row = 0; row < getRowCount(); row++) {
             for (int column = 0; column < getColumnCount(); column++) {
-                if (tiles[row][column] instanceof Number && ((Number) tiles[row][column]).getVolue() == volueOfPrevious) {
+                if (tiles[row][column] instanceof Number && ((Number) tiles[row][column]).getVolue() == valueOfPrevious) {
                     if (((Number) tiles[row][column]).getIsFirst()) {
                         ((Number) tiles[row][column]).setFirst(false);
                         (tiles[row][column]).setNextLine(null);
@@ -192,7 +192,7 @@ public class Field {
                 }
             }
         }
-        removeLines(volueOfPrevious);
+        removeLines(valueOfPrevious);
 
     }
 
@@ -223,16 +223,16 @@ public class Field {
         }
     }
 
-    public boolean checkConnection(int volueOfNumber) {
+    public boolean checkConnection(int valueOfNumber) {
         for (int row = 0; row < getRowCount(); row++) {
             for (int column = 0; column < getColumnCount(); column++) {
                 if (tiles[row][column] instanceof Number && ((Number) tiles[row][column]).getIsFirst() &&
-                        tiles[row][column].getColor().ordinal() == volueOfNumber) {
+                        tiles[row][column].getColor().ordinal() == valueOfNumber) {
                     Tile nextLine = (tiles[row][column]);
                     while (nextLine.getNextLine() != null) {
                         nextLine = nextLine.getNextLine();
                     }
-                    if (nextLine instanceof Number && nextLine.getColor().ordinal() == volueOfNumber && !((Number) nextLine).getIsFirst()) {
+                    if (nextLine instanceof Number && nextLine.getColor().ordinal() == valueOfNumber && !((Number) nextLine).getIsFirst()) {
                         return true;
                     }
                 }
