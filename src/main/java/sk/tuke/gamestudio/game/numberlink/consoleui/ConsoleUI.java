@@ -1,15 +1,13 @@
 package sk.tuke.gamestudio.game.numberlink.consoleui;
 
 import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.numberlink.core.Colors;
 import sk.tuke.gamestudio.game.numberlink.core.GameState;
 import sk.tuke.gamestudio.game.numberlink.core.Field;
 import sk.tuke.gamestudio.game.numberlink.core.TimerOfGame;
-import sk.tuke.gamestudio.service.CommentService;
-import sk.tuke.gamestudio.service.CommentServiceJDBC;
-import sk.tuke.gamestudio.service.ScoreService;
-import sk.tuke.gamestudio.service.ScoreServiceJDBC;
+import sk.tuke.gamestudio.service.*;
 
 import javax.xml.crypto.Data;
 import java.util.Date;
@@ -24,11 +22,14 @@ public class ConsoleUI {
     private Scanner scanner = new Scanner(System.in);
     private Timer timer;
     private TimerOfGame timerOfGame;
-    private ScoreService scoreService = new ScoreServiceJDBC();
-    private CommentService commentService = new CommentServiceJDBC();
+    private ScoreService scoreService;
+    private CommentService commentService ;
+    private RatingService ratingservice;
 
     public ConsoleUI() {
-
+        this.scoreService = new ScoreServiceJDBC();
+        this.ratingservice = new RatingServiceJDBC();
+        this.commentService = new CommentServiceJDBC();
     }
 
     public void play() {
@@ -47,7 +48,9 @@ public class ConsoleUI {
                 timer.cancel();
                 scoreService.addScore( new Score("numberlink",System.getProperty("user.name"), timerOfGame.getTime()*100/(field.getColumnCount()*2),new Date()));
                 System.out.println("Solved!");
+                wannaAddRating();
                 wannaAddComment();
+                
                 break;
             }
         }
@@ -57,8 +60,28 @@ public class ConsoleUI {
         }
     }
 
+    private void wannaAddRating() {
+        scanner = new Scanner(System.in);
+        System.out.print("Do you want to add rating?(A/N): ");
+        var sizeInput = scanner.nextLine().toUpperCase();
+        if ("A".equals(sizeInput)) {
+            System.out.print(" Please rate us from 1 to 5 stars: ");
+            int rating = scanner.nextInt();
+            if(rating<6 && rating>=0) {
+                ratingservice.setRating(new Rating("numberlink", System.getProperty("user.name"), rating, new Date()));
+            }
+            else{
+                System.out.println("invalid input");
+            }
+        }
+        else{
+            System.out.println("invalid input");
+        }
+    }
+
     private void wannaAddComment() {
-        System.out.print("Do you want to add some comment?(A/N): ");
+        scanner = new Scanner(System.in);
+        System.out.print("Do you want to add some comment to to improve the game?(A/N): ");
         var sizeInput = scanner.nextLine().toUpperCase();
         if ("A".equals(sizeInput)) {
             System.out.print(" Comment: ");
@@ -68,6 +91,7 @@ public class ConsoleUI {
     }
 
     private boolean wannaPlayAgain() {
+        scanner = new Scanner(System.in);
         System.out.println("Congratulations, you've won!");
         System.out.println("Your time was: " + timerOfGame.getTime() + " seconds and your score was: " + timerOfGame.getTime()*100/(field.getColumnCount()*2) );
         System.out.println("Do you wish to start a new game? (A/N): ");
