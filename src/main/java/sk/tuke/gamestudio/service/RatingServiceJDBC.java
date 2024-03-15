@@ -46,7 +46,7 @@ public class RatingServiceJDBC implements RatingService{
                     numOfRatings++;
                     volueOfAllRatings+= rs.getInt(3);
                 }
-                System.out.println(numOfRatings + " " + volueOfAllRatings);
+              //  System.out.println(numOfRatings + " " + volueOfAllRatings);
                 return (volueOfAllRatings/numOfRatings);
 
             }
