@@ -26,7 +26,6 @@ public class Field {
         this.maps = new Maps(getRowCount(), getColumnCount());
         int[][] mapValues = maps.getMap(getRowCount());
         for (int row = 0; row < getRowCount(); row++) {
-          //  System.out.print((char) ('A' + row) +"|");
             for (int column = 0; column < getColumnCount(); column++) {
                 if (mapValues[row][column] == 0) {
                     tiles[row][column] = new Line();
@@ -34,7 +33,6 @@ public class Field {
                 } else {
                     tiles[row][column] = new Number(mapValues[row][column]);
                     tiles[row][column].setColor(colors[mapValues[row][column]]);
-                   // System.out.print(((Number) tiles[row][column]).getVolue());
                 }
             }
         }
@@ -66,7 +64,7 @@ public class Field {
 
     private void connectLineWithLine(int row, int column) {
         if (volueOfPrevious != tiles[row][column].getColor().ordinal()) {
-            if (volueOfPrevious == -1 && tiles[row][column].getColor()!=Colors.NULL) {
+            if (volueOfPrevious == -1 && tiles[row][column].getColor() != Colors.NULL) {
                 volueOfPrevious = tiles[row][column].getColor().ordinal();
                 removeContinuedLines(row, column);
 
@@ -94,14 +92,14 @@ public class Field {
 
             } else if (tiles[row][column].getColor() == Colors.NULL) {
                 volueOfPrevious = -1;
-            } else {//specialny pripad bude na to test *********************************************
+            } else {
                 removeContinuedLines(row, column);
                 volueOfPrevious = tiles[row][column].getColor().ordinal();
             }
         } else if (volueOfPrevious == tiles[row][column].getColor().ordinal()) {
             removeContinuedLines(row, column);
-        }else{
-            removePreviousLine(row,column);
+        } else {
+            removePreviousLine(row, column);
             removeContinuedLines(row, column);
         }
     }
@@ -118,7 +116,7 @@ public class Field {
                 System.out.println("GAME OVER");
                 state = GameState.SOLVED;
             } else {
-             //   System.out.println("THE GAME IS NOT OVER YER");
+                //   System.out.println("THE GAME IS NOT OVER YER");
             }
         } else {
             if (!isThereFirstOfNumber(volueOfPrevious)) {
@@ -197,18 +195,17 @@ public class Field {
     }
 
     public void removeContinuedLines(int row, int column) {
-        //removePreviousLine(row, column);
         if ((tiles[row][column]).getNextLine() != null && tiles[row][column].getNextLine() instanceof Line) {
             Line nextLine = (Line) (tiles[row][column]).getNextLine();
 
             while (nextLine.getNextLine() != null && nextLine.getNextLine() instanceof Line) {
-                nextLine.setColor(Colors.NULL);//nextLine.setNextLine(null);
+                nextLine.setColor(Colors.NULL);
                 Line prevline = nextLine;
                 nextLine = (Line) nextLine.getNextLine();
                 prevline.setNextLine(null);
             }
-                nextLine.setColor(Colors.NULL);
-                nextLine.setNextLine(null);
+            nextLine.setColor(Colors.NULL);
+            nextLine.setNextLine(null);
         }
         (tiles[row][column]).setNextLine(null);
     }
@@ -250,7 +247,6 @@ public class Field {
                 }
             }
         }
-        //  generateField();
     }
 
     public void connectedNumbers() {

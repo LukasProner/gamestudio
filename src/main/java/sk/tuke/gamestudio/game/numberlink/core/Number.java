@@ -1,6 +1,6 @@
 package sk.tuke.gamestudio.game.numberlink.core;
 
-public class Number extends Tile{
+public class Number extends Tile {
     private final int volue;
     private boolean isFirst;
     private boolean isLast;

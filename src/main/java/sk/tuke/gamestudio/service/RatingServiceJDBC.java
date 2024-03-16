@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RatingServiceJDBC implements RatingService{
+public class RatingServiceJDBC implements RatingService {
     public static final String URL = "jdbc:postgresql://localhost/gamestudio";
     public static final String USER = "postgres";
     public static final String PASSWORD = "postgres";
@@ -44,10 +44,10 @@ public class RatingServiceJDBC implements RatingService{
                 while (rs.next()) {
                     ratings.add(new Rating(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getTimestamp(4)));
                     numOfRatings++;
-                    volueOfAllRatings+= rs.getInt(3);
+                    volueOfAllRatings += rs.getInt(3);
                 }
-              //  System.out.println(numOfRatings + " " + volueOfAllRatings);
-                return (volueOfAllRatings/numOfRatings);
+                //  System.out.println(numOfRatings + " " + volueOfAllRatings);
+                return (volueOfAllRatings / numOfRatings);
 
             }
         } catch (SQLException e) {

@@ -14,6 +14,7 @@ public class ServiceTests {
     ScoreService scoreService;
     CommentService commentService;
     RatingService ratingService;
+
     @BeforeEach
     void setUp() {
         scoreService = new ScoreServiceJDBC();
@@ -40,6 +41,7 @@ public class ServiceTests {
         assertEquals("Jaro", scores.get(0).getPlayer());
         assertEquals(100, scores.get(0).getPoints());
     }
+
     @Test
     public void getTopScores() {
         scoreService.reset();
@@ -63,12 +65,13 @@ public class ServiceTests {
         assertEquals("Lincoln", scores.get(2).getPlayer());
         assertEquals(1865, scores.get(2).getPoints());
     }
- // COMENT TESTS
+
+    // COMENT TESTS
     @Test
     public void resetComment() {
         commentService.reset();
-        assertEquals(0, commentService.getComments("numberlink").size());}
-
+        assertEquals(0, commentService.getComments("numberlink").size());
+    }
 
 
     @Test
@@ -108,31 +111,32 @@ public class ServiceTests {
         assertEquals("Chesus", comments.get(2).getPlayer());
         assertEquals("zomrel som v roku 33", comments.get(2).getComment());
     }
+
     //RATING TEST
     @Test
     public void resetRating() {
         var date = new Date();
-        ratingService.setRating(new Rating("numberlink","Kovač",3,date));
-        ratingService.setRating(new Rating("numberlink","Schuster",4,date));
-        ratingService.setRating(new Rating("numberlink","Gašparovič",1,date));
+        ratingService.setRating(new Rating("numberlink", "Kovač", 3, date));
+        ratingService.setRating(new Rating("numberlink", "Schuster", 4, date));
+        ratingService.setRating(new Rating("numberlink", "Gašparovič", 1, date));
         ratingService.reset();
-        ratingService.setRating(new Rating("numberlink","Čaputova",5,date));
-        assertEquals(0, ratingService.getAverageRating("numberlink"),5);
+        ratingService.setRating(new Rating("numberlink", "Čaputova", 5, date));
+        assertEquals(0, ratingService.getAverageRating("numberlink"), 5);
     }
 
     @Test
     public void addedRating() {
         ratingService.reset();
         var date = new Date();
-        ratingService.setRating(new Rating("numberlink","Kovač",3,date));
-        ratingService.setRating(new Rating("numberlink","Schuster",4,date));
-        ratingService.setRating(new Rating("numberlink","Gašparovič",1,date));
-        ratingService.setRating(new Rating("numberlink","Kiska",2,date));
-        ratingService.setRating(new Rating("numberlink","Čaputova",5,date));
+        ratingService.setRating(new Rating("numberlink", "Kovač", 3, date));
+        ratingService.setRating(new Rating("numberlink", "Schuster", 4, date));
+        ratingService.setRating(new Rating("numberlink", "Gašparovič", 1, date));
+        ratingService.setRating(new Rating("numberlink", "Kiska", 2, date));
+        ratingService.setRating(new Rating("numberlink", "Čaputova", 5, date));
 
-        assertEquals(ratingService.getRating("numberlink","Kovač"),3);
-        assertEquals(ratingService.getRating("numberlink","Kiska"),2);
-        assertEquals(ratingService.getAverageRating("numberlink"),3);
+        assertEquals(ratingService.getRating("numberlink", "Kovač"), 3);
+        assertEquals(ratingService.getRating("numberlink", "Kiska"), 2);
+        assertEquals(ratingService.getAverageRating("numberlink"), 3);
 
 
     }

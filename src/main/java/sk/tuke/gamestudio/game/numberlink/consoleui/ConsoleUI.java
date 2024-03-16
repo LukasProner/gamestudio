@@ -23,7 +23,7 @@ public class ConsoleUI {
     private Timer timer;
     private TimerOfGame timerOfGame;
     private ScoreService scoreService;
-    private CommentService commentService ;
+    private CommentService commentService;
     private RatingService ratingservice;
 
     public ConsoleUI() {
@@ -41,16 +41,16 @@ public class ConsoleUI {
         timer.schedule(timerOfGame, 0, 1000);
         while (field != null) {
             show();
-            System.out.println("time: " + timerOfGame.getTime());
+            System.out.println("     time: " + timerOfGame.getTime());
             handleInput();
             if (field.getState() == GameState.SOLVED) {
                 show();
                 timer.cancel();
-                scoreService.addScore( new Score("numberlink",System.getProperty("user.name"), timerOfGame.getTime()*100/(field.getColumnCount()*2),new Date()));
-                System.out.println("Solved!");
+                scoreService.addScore(new Score("numberlink", System.getProperty("user.name"), timerOfGame.getTime() * 100 / (field.getColumnCount() * 2), new Date()));
+                System.out.println("               Solved!");
                 wannaAddRating();
                 wannaAddComment();
-                
+
                 break;
             }
         }
@@ -62,42 +62,40 @@ public class ConsoleUI {
 
     private void wannaAddRating() {
         scanner = new Scanner(System.in);
-        System.out.print("Do you want to add rating?(A/N): ");
+        System.out.print("     Do you want to add rating?(A/N): ");
         var sizeInput = scanner.nextLine().toUpperCase();
         if ("A".equals(sizeInput)) {
-            System.out.print(" Please rate us from 1 to 5 stars: ");
+            System.out.print("     Please rate us from 1 to 5 stars: ");
             int rating = scanner.nextInt();
-            if(rating<6 && rating>=0) {
+            if (rating < 6 && rating >= 0) {
                 ratingservice.setRating(new Rating("numberlink", System.getProperty("user.name"), rating, new Date()));
-            }
-            else{
-                System.out.println("invalid input");
+            } else {
+                System.out.println("     invalid input");
+                wannaAddRating();
             }
         }
-        else{
-            System.out.println("invalid input");
-        }
+
     }
 
     private void wannaAddComment() {
         scanner = new Scanner(System.in);
-        System.out.print("Do you want to add some comment to to improve the game?(A/N): ");
+        System.out.print("     Do you want to add some comment to to improve the game?(A/N): ");
         var sizeInput = scanner.nextLine().toUpperCase();
         if ("A".equals(sizeInput)) {
-            System.out.print(" Comment: ");
+            System.out.print("     Comment: ");
             String comment = scanner.nextLine();
-            commentService.addComment(new Comment("numberlink",System.getProperty("user.name"), comment,new Date()));
+            commentService.addComment(new Comment("numberlink", System.getProperty("user.name"), comment, new Date()));
         }
     }
 
     private boolean wannaPlayAgain() {
         scanner = new Scanner(System.in);
-        System.out.println("Congratulations, you've won!");
-        System.out.println("Your time was: " + timerOfGame.getTime() + " seconds and your score was: " + timerOfGame.getTime()*100/(field.getColumnCount()*2) );
-        System.out.println("Do you wish to start a new game? (A/N): ");
+        System.out.println("     Congratulations, you've won!");
+        System.out.println("     Your time was: " + timerOfGame.getTime() + " seconds and your score was: " + timerOfGame.getTime() * 100 / (field.getColumnCount() * 2));
+        System.out.print("     Do you wish to start a new game? (A/N): ");
         var input = scanner.nextLine().toUpperCase();
         if ("X".equals(input) || "N".equals(input)) {
-            System.out.println("Have a nice day");
+            System.out.println("     Have a nice day");
             System.exit(0);
         } else if ("A".equals(input)) {
             return true;
@@ -110,8 +108,8 @@ public class ConsoleUI {
         System.out.print("Enter size of field (X - exit, 5*5 - size of field): ");
         var sizeInput = scanner.nextLine().toUpperCase();
         if ("X".equals(sizeInput)) {
-            System.out.println("Have a nice day");
-            if(timer!=null)
+            System.out.println("     Have a nice day");
+            if (timer != null)
                 timer.cancel();
             System.exit(0);
         }
@@ -120,45 +118,43 @@ public class ConsoleUI {
             int rows = Integer.parseInt(sizeMatcher.group(1));
             int columns = Integer.parseInt(sizeMatcher.group(2));
             if (rows != columns) {
-                System.out.println("the size has to be square");
+                System.out.println("     the size has to be square");
                 return null;
             }
             return new Field(rows, columns);
         } else {
-            System.out.println("Invalid input for field size.");
+            System.out.println("     Invalid input for field size.");
             return null;
         }
     }
 
     private void handleInput() {
-        System.out.print("Enter command (X - exit,P - pause, A0 - mark tile): ");
+        System.out.print("   Enter command (X - exit,P - pause, A0 - mark tile): ");
         var line = scanner.nextLine().toUpperCase();
         var matcher = INPUT_PATTERN_FOR_MOVE.matcher(line);
 
         if ("X".equals(line)) {
             timer.cancel();
-            System.out.println("  Have a nice day");
+            System.out.println("    Have a nice day");
             System.exit(0);
-        }
-        else if("P".equals(line)){
-           field.setState(GameState.PAUSED);
-            System.out.println("PAUSED AT : " + timerOfGame.getTime());
-        }
-        else if (matcher.matches()) {
+        } else if ("P".equals(line)) {
+            field.setState(GameState.PAUSED);
+            System.out.println("\n     PAUSED AT : " + timerOfGame.getTime());
+        } else if (matcher.matches()) {
             field.setState(GameState.PLAYING);
             int row = matcher.group(1).charAt(0) - 'A';
             int column = Integer.parseInt(matcher.group(2)) - 1;
             field.markTile(row, column);
         } else {
-            System.out.println("  wrong input");
+            System.out.println("     wrong input");
         }
     }
 
     public void show() {
-        System.out.println("\n\n");
+        System.out.println("\n\n     ");
         printFirstLine();
         for (int row = 0; row < field.getRowCount(); row++) {
-            System.out.print((char) ('A' + row) + "|");
+            System.out.print("     " + (char) ('A' + row) + "|");
             for (int column = 0; column < field.getColumnCount(); column++) {
                 if (field.getTile(row, column).getColor() == Colors.NULL) {
                     System.out.print("   _");
@@ -168,7 +164,7 @@ public class ConsoleUI {
             }
             System.out.println();
         }
-        System.out.print("Already connected pairs: ");
+        System.out.print("\n     Already connected pairs: ");
         field.connectedNumbers();
         System.out.println();
     }
@@ -198,7 +194,7 @@ public class ConsoleUI {
     }
 
     private void printFirstLine() {
-        System.out.print("____");
+        System.out.print("     ____");
         for (int i = 0; i < field.getColumnCount(); i++) {
             System.out.printf("%2d", (i + 1));
 

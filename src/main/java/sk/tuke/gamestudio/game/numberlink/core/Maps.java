@@ -9,10 +9,11 @@ public class Maps {
         this.rowCount = rowCount;
         this.columnCount = columnCount;
     }
-    private final int [][] trainy = {
-            {1,0,0},
-            {0,0,0},
-            {1,0,0},
+
+    private final int[][] trainy = {
+            {1, 0, 0},
+            {0, 0, 0},
+            {1, 0, 0},
     };
     private final int[][] fiveXfive = {
             {1, 2, 0, 0, 0},
@@ -29,7 +30,7 @@ public class Maps {
             {0, 0, 0, 0, 0, 0},
             {3, 4, 5, 0, 0, 5},
     };
-    private final int [][] sevenXseven = {
+    private final int[][] sevenXseven = {
             {1, 2, 3, 0, 0, 0, 4},
             {0, 0, 0, 0, 4, 5, 0},
             {0, 0, 0, 0, 0, 3, 0},
@@ -38,7 +39,7 @@ public class Maps {
             {0, 0, 0, 6, 1, 0, 0},
             {2, 0, 0, 0, 0, 0, 5},
     };
-    private final int [][] eightXeight = {
+    private final int[][] eightXeight = {
             {1, 0, 0, 0, 0, 0, 2, 3},
             {4, 0, 0, 0, 0, 0, 0, 0},
             {5, 0, 0, 0, 3, 0, 0, 0},
@@ -48,7 +49,7 @@ public class Maps {
             {0, 5, 0, 0, 0, 7, 0, 0},
             {1, 0, 0, 6, 0, 0, 2, 7},
     };
-    private final int [][] nineXnine = {
+    private final int[][] nineXnine = {
             {6, 5, 0, 0, 0, 3, 4, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0},
             {1, 7, 0, 0, 0, 0, 0, 0, 4},
@@ -59,19 +60,19 @@ public class Maps {
             {0, 0, 0, 0, 0, 1, 0, 8, 0},
             {0, 0, 0, 0, 0, 2, 0, 0, 0},
     };
-    private final int [][] tenXten = {
+    private final int[][] tenXten = {
             {1, 0, 0, 0, 0, 0, 2, 0, 0, 2},
             {0, 0, 0, 0, 0, 0, 4, 0, 0, 4},
             {0, 0, 0, 5, 3, 0, 0, 0, 0, 0},
             {3, 0, 0, 0, 0, 0, 0, 0, 6, 0},
             {5, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {7, 0, 0, 0, 8, 9, 0, 0, 9,10},
-            {11,0, 6, 0, 0, 0, 8, 0, 0, 0},
-            {0, 0, 1, 0, 0, 0, 0, 0,12,13},
+            {7, 0, 0, 0, 8, 9, 0, 0, 9, 10},
+            {11, 0, 6, 0, 0, 0, 8, 0, 0, 0},
+            {0, 0, 1, 0, 0, 0, 0, 0, 12, 13},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {11,7,10,12, 0, 0,13, 0, 0, 0},
+            {11, 7, 10, 12, 0, 0, 13, 0, 0, 0},
     };
-    private final int [][] elevenXeleven = {
+    private final int[][] elevenXeleven = {
             {0, 0, 0, 0, 0, 0, 2, 0, 0, 3, 4},
             {0, 5, 6, 0, 0, 0, 0, 0, 4, 0, 0},
             {0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 3},
@@ -84,6 +85,7 @@ public class Maps {
             {0, 9, 0, 1, 0, 0, 0, 0, 0, 13, 0},
             {12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     };
+
     public int getCountOfNumber(int size) {
         switch (size) {
             case 5:
@@ -106,6 +108,7 @@ public class Maps {
                 return 0;
         }
     }
+
     public int[][] getMap(int row) {
         switch (row) {
             case 5:
