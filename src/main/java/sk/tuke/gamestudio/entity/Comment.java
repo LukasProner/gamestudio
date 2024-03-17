@@ -51,6 +51,6 @@ public class Comment {
         this.commentedOn = commentedOn;
     }
     private void JustRandomMetod(){
-        System.out.println("ahoj");
+        System.out.println("ahojte");
     }
 }
