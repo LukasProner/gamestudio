@@ -9,7 +9,6 @@ import sk.tuke.gamestudio.game.numberlink.core.Field;
 import sk.tuke.gamestudio.game.numberlink.core.TimerOfGame;
 import sk.tuke.gamestudio.service.*;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.Timer;

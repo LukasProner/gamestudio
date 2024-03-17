@@ -19,35 +19,35 @@ public class Comment {
         this.commentedOn = commentedOn;
     }
 
-    public void setPlayer(String player) {
-        this.player = player;
-    }
-
-    public void setCommentedOn(Date commentedOn) {
-        this.commentedOn = commentedOn;
+    public String getGame() {
+        return game;
     }
 
     public void setGame(String game) {
         this.game = game;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     public String getPlayer() {
         return player;
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
     }
 
     public String getComment() {
         return comment;
     }
 
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public Date getCommentedOn() {
         return commentedOn;
     }
 
-    public String getGame() {
-        return game;
+    public void setCommentedOn(Date commentedOn) {
+        this.commentedOn = commentedOn;
     }
 }
