@@ -50,6 +50,7 @@ public class ConsoleUI {
                 System.out.println("               Solved!");
                 wannaAddRating();
                 wannaAddComment();
+                wannaSeeCommentOrRating();
 
                 break;
             }
@@ -87,10 +88,26 @@ public class ConsoleUI {
             commentService.addComment(new Comment("numberlink", System.getProperty("user.name"), comment, new Date()));
         }
     }
+    private void wannaSeeCommentOrRating() {
+        scanner = new Scanner(System.in);
+        System.out.print("     Do you want to see comments and rating of the game?(A/N): ");
+        var sizeInput = scanner.nextLine().toUpperCase();
+        if ("A".equals(sizeInput)) {
+            System.out.print("   Comments:\n");
+        }
+        var comments = commentService.getComments("numberlink");
+        var ratings = ratingservice.getAverageRating("numberlink");
+        for (int i = 0; i < comments.size(); i++) {
+            var comment = comments.get(i);
+            System.out.printf("     %d %s : %s\n", (i + 1),comment.getPlayer(), comment.getComment());
+        }
+        System.out.println("--------------------------------------------------");
+        System.out.printf("     Average rating is %d", ratings);
+    }
 
     private boolean wannaPlayAgain() {
         scanner = new Scanner(System.in);
-        System.out.println("     Congratulations, you've won!");
+        System.out.println("  \n\n   Congratulations, you've won!");
         System.out.println("     Your time was: " + timerOfGame.getTime() + " seconds and your score was: " + timerOfGame.getTime() * 100 / (field.getColumnCount() * 2));
         System.out.print("     Do you wish to start a new game? (A/N): ");
         var input = scanner.nextLine().toUpperCase();
