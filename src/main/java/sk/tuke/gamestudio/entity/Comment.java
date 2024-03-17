@@ -50,4 +50,7 @@ public class Comment {
     public void setCommentedOn(Date commentedOn) {
         this.commentedOn = commentedOn;
     }
+    private void JustRandomMetod(){
+        System.out.println("ahoj");
+    }
 }
