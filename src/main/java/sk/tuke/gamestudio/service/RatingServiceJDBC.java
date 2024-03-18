@@ -51,7 +51,7 @@ public class RatingServiceJDBC implements RatingService {
 
             }
         } catch (SQLException e) {
-            throw new ScoreException("Problem selecting score", e);
+            throw new RatingException("Problem selecting score", e);
         }
     }
 
@@ -70,7 +70,7 @@ public class RatingServiceJDBC implements RatingService {
                 }
             }
         } catch (SQLException e) {
-            throw new ScoreException("Problem selecting score", e);
+            throw new RatingException("Problem selecting score", e);
         }
 
     }
