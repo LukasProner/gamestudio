@@ -1,0 +1,16 @@
+1) Časovač + možnosť pozastavenia času
+2) zafarbenie poľa
+3) Keďže som nedokázal príjsť s nápadom alebo najsť na internete návod ako by som dokazal zaručiť
+dohrateľnosť hry pri náhodnom generovaní poľa, tak som aspoň pridal možnosť výberu mapy, ktorú bude hráč chcieť dohrať
+
+NEVIEM ČI SA TO RATA AKO BONUS:
+4) Oproti väčšine hier typu numberlink, ktoré som na internete našiel, som si vybral na plikovanie
+naročnejší ale o to krajší spôsob spájania čísel, ktorého podstata spočíva v prerušovaní čiar v určitých
+situáciach. Samotné políčka majú teda referenciu na políčko, ktoré je s nimi spojené.
+
+5) Možnosti hrača, pridať hodnotenie, komentár a zistiť nasledne tieti veci od ostatných hráčov.
+
+6)možnosť znovu začať hru.
+
+
+
