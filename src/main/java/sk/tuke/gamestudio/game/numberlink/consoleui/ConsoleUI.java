@@ -26,11 +26,12 @@ public class ConsoleUI {
     private ScoreService scoreService;
     @Autowired
     private CommentService commentService;
+    @Autowired
     private RatingService ratingservice;
 
     public ConsoleUI() {
       //  this.scoreService = new ScoreServiceJDBC();
-        this.ratingservice = new RatingServiceJDBC();
+        //this.ratingservice = new RatingServiceJDBC();
        // this.commentService = new CommentServiceJDBC();
     }
 

@@ -32,6 +32,10 @@ public class SpringClient {
     }
     @Bean
     public CommentService commentService() {
-        return new CommentServiceJDBC();
+        return new CommentServiceJPA();
+    }
+    @Bean
+    public RatingService ratingService() {
+        return new RatingServiceJPA();
     }
 }
