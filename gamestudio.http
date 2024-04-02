@@ -1,0 +1,10 @@
+POST http://localhost:8081/api/comment
+Content-Type: application/json
+
+{
+  "game": "numberlink",
+  "player": "janko",
+  "comment": "skuska komentu cez gamestudio.http",
+  "commentedOn": "2019-03-25T12:40:33"
+
+}

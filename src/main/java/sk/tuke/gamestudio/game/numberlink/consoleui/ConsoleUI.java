@@ -36,7 +36,7 @@ public class ConsoleUI {
     }
 
     public void play() {
-        scoreService.addScore(new Score("numberlink",System.getProperty("user.name"),100,new Date()));
+     //   scoreService.addScore(new Score("InaHra",System.getProperty("user.name"),10000,new Date()));
         while (field == null) {
             field = handleSizeOfField();
         }
@@ -225,7 +225,7 @@ public class ConsoleUI {
     }
 
     private void printScore() {
-        var scores = scoreService.getTopScores("numberlink");
+        var scores = scoreService.getTgit opScores("numberlink");
         for (int i = 0; i < scores.size(); i++) {
             var score = scores.get(i);
             System.out.printf("%d %s %d\n", (i + 1), score.getPlayer(), score.getPoints());

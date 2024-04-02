@@ -42,7 +42,7 @@ public class SpringClient {
     }
     @Bean
     public CommentService commentService() {
-        return new CommentServiceJPA();
+        return new CommentServiceRestClient();
     }
     @Bean
     public RatingService ratingService() {

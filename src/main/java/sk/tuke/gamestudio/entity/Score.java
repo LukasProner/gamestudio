@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 @Entity
 @NamedQuery( name = "Score.getTopScores",
-        query = "SELECT s FROM Score s WHERE s.game=:game ORDER BY s.points DESC")
+        query = "SELECT s FROM Score s WHERE s.game=:game ORDER BY s.points ASC")
 @NamedQuery( name = "Score.resetScores",
         query = "DELETE FROM Score")
 
