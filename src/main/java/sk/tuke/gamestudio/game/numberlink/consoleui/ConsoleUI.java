@@ -225,7 +225,7 @@ public class ConsoleUI {
     }
 
     private void printScore() {
-        var scores = scoreService.getTgit opScores("numberlink");
+        var scores = scoreService.getTopScores("numberlink");
         for (int i = 0; i < scores.size(); i++) {
             var score = scores.get(i);
             System.out.printf("%d %s %d\n", (i + 1), score.getPlayer(), score.getPoints());
