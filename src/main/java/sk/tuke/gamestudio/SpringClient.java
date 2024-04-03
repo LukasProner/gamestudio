@@ -46,7 +46,7 @@ public class SpringClient {
     }
     @Bean
     public RatingService ratingService() {
-        return new RatingServiceJPA();
+        return new RatingServiceRestClient();
     }
     @Bean
     public RestTemplate restTemplate() {
