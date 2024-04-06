@@ -25,3 +25,20 @@ Content-Type: application/json
 ###
 
 GET http://localhost:8081/api/rating/numberlink
+
+###
+GET http://localhost:8081/api/rating/numberlink/Mirec
+
+###
+POST http://localhost:8081/api/score
+Content-Type: application/json
+
+{
+  "game": "numberlink",
+  "player": "Mirec",
+  "points": 123456,
+  "playedOn": "2019-03-25T12:40:33"
+}
+###
+
+GET http://localhost:8081/api/score/numberlink
