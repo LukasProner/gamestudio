@@ -34,3 +34,4 @@ build/
 .gitlab-ci.yml
 mvnw
 mvnw.cmd
+.mvn/wrapper/
