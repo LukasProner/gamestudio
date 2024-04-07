@@ -37,9 +37,9 @@ public class RatingServiceJPA implements RatingService {
             return rating != null ? rating.getRating() : 0;
         } catch (NoResultException e) {
             return 0;
-        } catch (Exception e) {
-            throw new RatingException("Problem getting rating by player", e);
-        }
+        }/* catch (Exception e) {
+            throw new RatingException("Proeblem s getRating", e);
+        }*/
     }
 
     @Override
