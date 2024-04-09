@@ -15,7 +15,9 @@ public class RatingServiceJPA implements RatingService {
 
     @Override
     public void setRating(Rating rating) throws RatingException {
-        entityManager.persist(rating);
+        if (rating.getRating()<=5 || rating.getRating()>=0) {
+            entityManager.persist(rating);
+        }
     }
 
     @Override
@@ -37,9 +39,9 @@ public class RatingServiceJPA implements RatingService {
             return rating != null ? rating.getRating() : 0;
         } catch (NoResultException e) {
             return 0;
-        }/* catch (Exception e) {
+        } catch (Exception e) {
             throw new RatingException("Proeblem s getRating", e);
-        }*/
+        }
     }
 
     @Override

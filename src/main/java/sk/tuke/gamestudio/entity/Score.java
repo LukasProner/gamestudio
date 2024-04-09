@@ -35,8 +35,6 @@ public class Score implements Serializable {
         this.playedOn = playedOn;
     }
 
-
-
     public int getIdent() {
         return ident;
     }
