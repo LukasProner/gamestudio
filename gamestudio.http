@@ -18,7 +18,7 @@ Content-Type: application/json
 {
   "game": "numberlink",
   "player": "Mirec",
-  "rating": -8,
+  "rating": 1,
   "ratedOn": "2019-03-25T12:40:33"
 }
 

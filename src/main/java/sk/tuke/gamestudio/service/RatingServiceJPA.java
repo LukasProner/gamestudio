@@ -15,7 +15,20 @@ public class RatingServiceJPA implements RatingService {
 
     @Override
     public void setRating(Rating rating) throws RatingException {
-        if (rating.getRating()<=5 || rating.getRating()>=0) {
+        try {
+            Rating existingRating = entityManager.createNamedQuery("Rating.getRatingByPlayer", Rating.class)
+                    .setParameter("game", rating.getGame())
+                    .setParameter("player", rating.getPlayer())
+                    .getSingleResult();
+
+            // Ak existuje hodnotenie, aktualizujte ho alebo vyhodťte výnimku
+            existingRating.setRating(rating.getRating());
+            entityManager.merge(existingRating);
+        } catch (NoResultException e) {
+            // Ak hodnotenie neexistuje, overte platnosť a pridajte nové hodnotenie
+            if (rating.getRating() < 0 || rating.getRating() > 5) {
+                throw new RatingException("Neplatné hodnotenie. Hodnotenie musí byť medzi 0 a 5.");
+            }
             entityManager.persist(rating);
         }
     }
