@@ -188,6 +188,7 @@ public class ConsoleUI {
         System.out.print("\n     Already connected pairs: ");
         field.connectedNumbers();
         System.out.println();
+
     }
 
     private void printColoredNumber(int row, int column) {

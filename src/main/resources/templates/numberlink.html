@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gamestudio</title>
+    <link rel="stylesheet" href="/css/stylesheet.css"/>
+</head>
+<body>
+
+<h1>Numberlink</h1>
+
+<a href="/numberlink/new">New game</a><br>
+
+<form action="/numberlink/chooseSize" method="get">
+    Rows: <input type="number" name="rows" value="3"><br>
+    Columns: <input type="number" name="columns" value="3"><br>
+    <input type="submit" value="Choose Size">
+</form>
+
+<span th:utext="${@numberlinkController.getHtmlField()}"></span>
+
+<span th:if="${isSolved}">Solved!</span>
+<h2>Comments</h2>
+<table>
+    <tr>
+        <th>Player</th>
+        <th>Comment</th>
+        <th>Commented On</th>
+    </tr>
+    <tr th:each="comment : ${comments}">
+        <td th:text="${comment.player}"></td>
+        <td th:text="${comment.comment}"></td>
+        <td th:text="${#dates.format(comment.commentedOn, 'dd.MM.yyyy HH:mm:ss')}"></td>
+    </tr>
+</table>
+
+</body>
+</html>
