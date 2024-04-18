@@ -14,6 +14,7 @@ import sk.tuke.gamestudio.game.numberlink.core.Field;
 import sk.tuke.gamestudio.game.numberlink.core.GameState;
 import sk.tuke.gamestudio.game.numberlink.core.Tile;
 import sk.tuke.gamestudio.service.CommentService;
+import sk.tuke.gamestudio.service.ScoreService;
 
 import javax.xml.crypto.Data;
 import java.util.Date;
@@ -24,12 +25,12 @@ import java.util.List;
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class NumberlinkController {
     private Field field = new Field(3,3);
-    private final CommentService commentService;
+    @Autowired
+    private CommentService commentService;
 
     @Autowired
-    public NumberlinkController(CommentService commentService) {
-        this.commentService = commentService;
-    }
+    private ScoreService scoreService;
+
     @RequestMapping
     public String numberlink(@RequestParam(required = false) Integer row, @RequestParam(required = false) Integer column, Model model) {
         if (row != null && column != null && field.getState()!=GameState.SOLVED)
@@ -43,6 +44,7 @@ public class NumberlinkController {
         List<Comment> comments = commentService.getComments("numberlink");
         model.addAttribute("field", getHtmlField());
         model.addAttribute("comments", comments);
+        model.addAttribute("scores",scoreService.getTopScores("numberlink"));
         return "numberlink";
     }
 

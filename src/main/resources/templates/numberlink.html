@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>Gamestudio</title>
     <link rel="stylesheet" href="/css/stylesheet.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
 <h1>Numberlink</h1>
-
+<span th:if="${@userController.logged}">
+Logged as:<span th:text="${@userController.loggedUser.login}"/><br/>
+</span>
 <a href="/numberlink/new">New game</a><br>
 
 <form action="/numberlink/chooseSize" method="get">
@@ -34,5 +37,12 @@
     </tr>
 </table>
 
+<h3>Scores</h3>
+<ol>
+    <li th:each="score : ${scores}">
+        <span th:text="${score.player}"/>
+        <span th:text="${score.points}"/>
+    </li>
+</ol>
 </body>
 </html>
