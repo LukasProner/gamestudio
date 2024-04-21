@@ -10,7 +10,7 @@ body {
 
 
 h1 {
-    font-size: 1.6em
+    font-size: 3em
 }
 
 h2 {
@@ -39,12 +39,24 @@ label {
     display: inline-block; /*instead of inline (default)*/
     min-width: 5em;
 }
+table.scores {
+    position:absolute;
+    bottom: 0; /* Tabuľka so skóre bude na spodku */
+    left: 0;
+    width: 400px;
+}
 
+.comments-table {
+    position: absolute;
+    bottom: 0; /* Tabuľka s komentármi bude na spodku */
+    right: 0;
+    width: 400px;
+}
 td {
     padding: 0;
 }
 table.scores {
-    width: 100%;
+
     border: black 2px;
 }
 
@@ -52,7 +64,17 @@ table.scores th {
     font-weight: bold;
     color: #FFFFFF;
     background-color: dimgray;
-
+}
+.comments-table th {
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: dimgray;
+}
+.comments-table tr:nth-child(even) {
+    background-color: lightgray
+}
+.comments-table tr:nth-child(odd) {
+    background-color: white;
 }
 
 table.scores tr:nth-child(even) {
@@ -61,4 +83,10 @@ table.scores tr:nth-child(even) {
 
 table.scores tr:nth-child(odd) {
     background-color: white;
+}
+
+
+#fieldTable {
+    width: 50px; /* Šírka tabuľky */
+    height: 50px; /* Výška tabuľky */
 }

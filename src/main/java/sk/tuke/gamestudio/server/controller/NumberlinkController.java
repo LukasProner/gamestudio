@@ -81,14 +81,13 @@ public class NumberlinkController {
     }
 
 
-    public String getHtmlField(){
+    public String getHtmlField() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<table>\n");
+        sb.append("<table id=\"fieldTable\">\n");
         for (int row = 0; row < field.getRowCount(); row++) {
             sb.append("<tr>\n");
             for (int column = 0; column < field.getColumnCount(); column++) {
-                var tile = field.getTile(row,column);
-                System.out.println(tile.getClass() + " clas --------");
+                var tile = field.getTile(row, column);
                 sb.append("<td>\n");
                 sb.append("<a href='/numberlink?row=" + row + "&column=" + column + "'>\n");
                 sb.append("<img src = '/images/numberlink/" + getImageName(tile) + ".png'>");
@@ -97,10 +96,10 @@ public class NumberlinkController {
             }
             sb.append("</tr>\n");
         }
-        sb.append("/<table>\n");
+        sb.append("</table>\n");
+
         return sb.toString();
     }
-
     private String getImageName(Tile tile) {
         switch (tile.getColor()) {
             case NULL -> {
