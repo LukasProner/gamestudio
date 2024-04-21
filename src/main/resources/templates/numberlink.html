@@ -38,6 +38,18 @@ Logged as:<span th:text="${@userController.loggedUser.login}"/><br/>
     </tr>
 </table>
 
+<h3>Leave a Comment</h3>
+<form action="/numberlink/addComment" method="post">
+    <label for="playerName">Your Name:</label>
+    <input type="text" id="playerName" name="playerName" required><br>
+    <label for="comment">Comment:</label><br>
+    <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br>
+    <input type="submit" value="Submit">
+</form>
+
+<h1>Average Rating for the Game</h1>
+<p>The average rating for the game is: <span th:text="${averageRating}"></span></p>
+
 <h3>Top scores</h3>
 <table class="scores">
     <thead>
@@ -58,7 +70,6 @@ Logged as:<span th:text="${@userController.loggedUser.login}"/><br/>
     </tr>
     </tbody>
 </table>
-
 
 
 </body>
