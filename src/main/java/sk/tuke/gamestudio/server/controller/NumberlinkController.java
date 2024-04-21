@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.numberlink.core.Colors;
 import sk.tuke.gamestudio.game.numberlink.core.Field;
@@ -36,12 +37,25 @@ public class NumberlinkController {
     private RatingService ratingService;
 
     @ModelAttribute("averageRating")
-    public double getAverageRating() {
+    public int getAverageRating() {
         return ratingService.getAverageRating("numberlink");
     }
 
     @RequestMapping
     public String numberlink(@RequestParam(required = false) Integer row, @RequestParam(required = false) Integer column, Model model) {
+
+        double averageRating = ratingService.getAverageRating("numberlink");
+        model.addAttribute("averageRating", averageRating);
+
+        if (userController.isLogged()) {
+            int playerRating = ratingService.getRating("numberlink", userController.getLoggedUser().getLogin());
+            model.addAttribute("playerRating", playerRating);
+        }
+
+        List<Comment> comments = commentService.getComments("numberlink");
+        model.addAttribute("field", getHtmlField());
+        model.addAttribute("comments", comments);
+        model.addAttribute("scores",scoreService.getTopScores("numberlink"));
         if (row != null && column != null && field.getState()!=GameState.SOLVED)
             field.markTile(row, column);
         if (field.getState() == GameState.SOLVED && userController.isLogged()) {
@@ -51,15 +65,6 @@ public class NumberlinkController {
         } else {
             model.addAttribute("isSolved", false);
         }
-
-        // Přidání průměrného hodnocení do modelu
-        double averageRating = ratingService.getAverageRating("numberlink");
-        model.addAttribute("averageRating", averageRating);
-
-        List<Comment> comments = commentService.getComments("numberlink");
-        model.addAttribute("field", getHtmlField());
-        model.addAttribute("comments", comments);
-        model.addAttribute("scores",scoreService.getTopScores("numberlink"));
         return "numberlink";
     }
 
@@ -167,10 +172,22 @@ public class NumberlinkController {
         return "numberlink";
     }
     @PostMapping("/addComment")
-    public String addComment(@RequestParam("playerName") String playerName, @RequestParam("comment") String commentText) {
-        System.out.println("9999999999");
-        Comment comment = new Comment("numberlink",playerName, commentText,new Date());
+    public String addComment(@RequestParam(required = false) String playerName, @RequestParam("comment") String commentText) {
+        if (!userController.isLogged()) {
+            return "redirect:/login";
+        }
+
+        Comment comment = new Comment("numberlink", userController.getLoggedUser().getLogin(), commentText, new Date());
         commentService.addComment(comment);
-        return "numberlink"; // Presmerovanie na hlavnú stránku po odoslaní komentára
+        return "numberlink";
+    }
+    @PostMapping("/addRating")
+    public String addRating(@RequestParam("rating") int rating) {
+        if (!userController.isLogged()) {
+            return "redirect:/login";
+        }
+        Rating rating1 = new Rating("numberlink",userController.getLoggedUser().getLogin(),rating,new Date());
+        ratingService.setRating(rating1);
+        return "numberlink";
     }
 }

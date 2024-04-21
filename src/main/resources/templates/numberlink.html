@@ -14,10 +14,29 @@ Logged as:<span th:text="${@userController.loggedUser.login}"/><br/>
 </span>
 <a href="/numberlink/new">New game</a><br>
 
+
 <form action="/numberlink/chooseSize" method="get">
-    Rows: <input type="number" name="rows" value="3"><br>
-    Columns: <input type="number" name="columns" value="3"><br>
+    Rows: <input type="number" name="rows" value="3" min="2" max="9"><br>
+    Columns: <input type="number" name="columns" value="3" min="2" max="9"><br>
     <input type="submit" value="Choose Size">
+</form>
+
+<span th:if="${@userController.logged}">
+    Logged as: <span th:text="${@userController.loggedUser.login}"/><br/>
+    Your Rating: <span th:text="${playerRating}"/><br/>
+</span>
+
+<h3>Rate the Game</h3>
+<form action="/numberlink/addRating" method="post">
+    <label for="rating">Your Rating:</label>
+    <select id="rating" name="rating" required>
+        <option value="1">1 star</option>
+        <option value="2">2 stars</option>
+        <option value="3">3 stars</option>
+        <option value="4">4 stars</option>
+        <option value="5">5 stars</option>
+    </select><br>
+    <input type="submit" value="Submit Rating">
 </form>
 
 <span th:utext="${@numberlinkController.getHtmlField()}"></span>
@@ -40,8 +59,6 @@ Logged as:<span th:text="${@userController.loggedUser.login}"/><br/>
 
 <h3>Leave a Comment</h3>
 <form action="/numberlink/addComment" method="post">
-    <label for="playerName">Your Name:</label>
-    <input type="text" id="playerName" name="playerName" required><br>
     <label for="comment">Comment:</label><br>
     <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br>
     <input type="submit" value="Submit">
