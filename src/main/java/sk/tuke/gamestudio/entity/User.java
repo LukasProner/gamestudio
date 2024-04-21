@@ -1,5 +1,7 @@
 package sk.tuke.gamestudio.entity;
 
+//@Entiti
+//@Table(name = "player")
 public class User {
     private String login;
 

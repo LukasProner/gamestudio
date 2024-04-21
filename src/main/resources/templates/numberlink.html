@@ -22,6 +22,7 @@ Logged as:<span th:text="${@userController.loggedUser.login}"/><br/>
 
 <span th:utext="${@numberlinkController.getHtmlField()}"></span>
 
+
 <span th:if="${isSolved}">Solved!</span>
 <h2>Comments</h2>
 <table>
@@ -37,12 +38,28 @@ Logged as:<span th:text="${@userController.loggedUser.login}"/><br/>
     </tr>
 </table>
 
-<h3>Scores</h3>
-<ol>
-    <li th:each="score : ${scores}">
-        <span th:text="${score.player}"/>
-        <span th:text="${score.points}"/>
-    </li>
-</ol>
+<h3>Top scores</h3>
+<table class="scores">
+    <thead>
+    <tr>
+        <th>No.</th>
+        <th>Player</th>
+        <th>Points</th>
+        <th>Played at</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--/*@thymesVar id="scores" type="java.util.List<sk.tuke.gamestudio.entity.Score>"*/-->
+    <tr th:each="score, it : ${scores}">
+        <td th:text="${it.index + 1}"/>
+        <td th:text="${score.player}"/>
+        <td th:text="${score.points}"/>
+        <td th:text="${#dates.format(score.playedOn, 'dd.MM.yyyy HH:mm')}"/>
+    </tr>
+    </tbody>
+</table>
+
+
+
 </body>
 </html>

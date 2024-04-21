@@ -2,6 +2,7 @@ package sk.tuke.gamestudio.game.numberlink.core;
 
 public class Field {
     private final int rowCount;
+    private long startMillis;
     private final int columnCount;
     private final Tile[][] tiles;
     private Maps maps;
@@ -14,6 +15,7 @@ public class Field {
         if (rowCount != columnCount) {
             throw new IllegalArgumentException("Pole musí mať rovnaké hodnoty strán.");
         }
+        startMillis = System.currentTimeMillis();
         this.state = GameState.PLAYING;
         this.rowCount = rowCount;
         this.columnCount = columnCount;
@@ -282,4 +284,12 @@ public class Field {
     public void setState(GameState state) {
         this.state = state;
     }
+
+    public int getScore() {
+        return state == GameState.SOLVED ?
+                (int) (rowCount * columnCount - (System.currentTimeMillis() - startMillis) / 1000)
+                :
+                0;
+    }
+
 }

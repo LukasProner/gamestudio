@@ -24,6 +24,8 @@ import java.util.List;
 @RequestMapping("/numberlink")
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class NumberlinkController {
+    @Autowired
+    private UserController userController;
     private Field field = new Field(3,3);
     @Autowired
     private CommentService commentService;
@@ -35,8 +37,11 @@ public class NumberlinkController {
     public String numberlink(@RequestParam(required = false) Integer row, @RequestParam(required = false) Integer column, Model model) {
         if (row != null && column != null && field.getState()!=GameState.SOLVED)
             field.markTile(row, column);
-        if (field.getState() == GameState.SOLVED) {
+        if (field.getState() == GameState.SOLVED ) {
             model.addAttribute("isSolved", true);
+            if(userController.isLogged()) {
+                scoreService.addScore(new Score("numberlink", userController.getLoggedUser().getLogin(), field.getScore(), new Date()));
+            }
             System.out.println("               Solved!");
         } else {
             model.addAttribute("isSolved", false);
