@@ -52,5 +52,9 @@ public class SpringClient {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+    @Bean
+    public UserService userService() {
+        return new UserServiceJPA();
+    }
 
 }

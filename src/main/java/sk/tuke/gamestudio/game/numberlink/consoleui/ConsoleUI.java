@@ -28,6 +28,8 @@ public class ConsoleUI {
     private CommentService commentService;
     @Autowired
     private RatingService ratingservice;
+    @Autowired
+    private UserService userService;
 
     public ConsoleUI() {
       //  this.scoreService = new ScoreServiceJDBC();
