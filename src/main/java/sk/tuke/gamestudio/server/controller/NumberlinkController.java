@@ -103,7 +103,7 @@ public class NumberlinkController {
     private String getImageName(Tile tile) {
         switch (tile.getColor()) {
             case NULL -> {
-                return "svetlofialova";
+                return "ciste";
             }
             case RED -> {
                 if(tile.getClass().getName().contains("Line")){
@@ -120,9 +120,9 @@ public class NumberlinkController {
             }
             case YELLOW -> {
                 if(tile.getClass().getName().contains("Line")){
-                    return "fialova";
+                    return "tirkysova";
                 }
-                return "fialova6";
+                return "tirkysova3";
             }
             case ORANGE -> {
                 if(tile.getClass().getName().contains("Line")){

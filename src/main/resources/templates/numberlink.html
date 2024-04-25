@@ -8,24 +8,14 @@
 </head>
 <body>
 <h1>Numberlink</h1>
-<span th:if="${@userController.logged}">
-        Logged as: <span th:text="${@userController.loggedUser.login}"/><br/>
-    </span>
-<a href="/numberlink/new">New game</a><br>
-
-<form action="/numberlink/chooseSize" method="get">
-    Rows: <input type="number" name="rows" value="3" min="2" max="9"><br>
-    Columns: <input type="number" name="columns" value="3" min="2" max="9"><br>
-    <input type="submit" value="Choose Size">
-</form>
 
 <span th:if="${@userController.logged}">
         Logged as: <span th:text="${@userController.loggedUser.login}"/><br/>
         Your Rating: <span th:text="${playerRating}"/><br/>
     </span>
 
-<h3>Rate the Game</h3>
-<form action="/numberlink/addRating" method="post">
+<h3 class="rate-game-section">Rate the Game</h3>
+<form action="/numberlink/addRating" method="post" class="rate-game-form">
     <label for="rating">Your Rating:</label>
     <select id="rating" name="rating" required>
         <option value="1">1 star</option>
@@ -41,12 +31,16 @@
 
 <span th:if="${isSolved}">Solved!</span>
 
-<!-- Move the comment form here -->
-<form action="/numberlink/addComment" method="post" style="position: absolute; bottom: 20px; right:600px;">
-    <label for="comment">Comment:</label><br>
-    <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br>
-    <input type="submit" value="Submit">
-</form>
+
+<div class="game-controls">
+    <a href="/numberlink/new">New game</a><br>
+
+    <form action="/numberlink/chooseSize" method="get">
+        Rows: <input type="number" name="rows" value="3" min="2" max="9"><br>
+        Columns: <input type="number" name="columns" value="3" min="2" max="9"><br>
+        <input type="submit" value="Choose Size">
+    </form>
+</div>
 
 <h2 class="comments-table">Comments</h2>
 <table class="comments-table">
@@ -62,8 +56,10 @@
     </tr>
 </table>
 
-<h2>Average Rating for the Game</h2>
-<p>The average rating for the game is: <span th:text="${averageRating}"></span></p>
+<div class="average-rating-section">
+    <h2>Average Rating for the Game</h2>
+    <p>The average rating for the game is: <span th:text="${averageRating}"></span></p>
+</div>
 <h3>Leave a Comment</h3>
 
 <h3>Top scores</h3>
