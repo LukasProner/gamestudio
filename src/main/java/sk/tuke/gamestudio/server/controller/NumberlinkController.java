@@ -148,6 +148,11 @@ public class NumberlinkController {
                     return "ruzova";
                 }
                 return "ruzova7";
+            }case PURPLE -> {
+                if(tile.getClass().getName().contains("Line")){
+                    return "hneda";
+                }
+                return "hneda8";
             }
 
 
@@ -158,9 +163,9 @@ public class NumberlinkController {
         return new Field(rows, columns);
     }
     @RequestMapping("/chooseSize")
-    public String chooseSize(@RequestParam(required = false) Integer rows, @RequestParam(required = false) Integer columns, Model model) {
-        if (rows != null && columns != null) {
-            field = new Field(rows,columns);
+    public String chooseSize(@RequestParam(required = false) Integer rows, Model model) {
+        if (rows != null ) {
+            field = new Field(rows,rows);
         } else {
             // Default size, if not specified
             field = new Field(3, 3);
@@ -173,7 +178,7 @@ public class NumberlinkController {
     @PostMapping("/addComment")
     public String addComment(@RequestParam(required = false) String playerName, @RequestParam("comment") String commentText) {
         if (!userController.isLogged()) {
-            return "redirect:/login";
+            return "redirect:/register";
         }
 
         Comment comment = new Comment("numberlink", userController.getLoggedUser().getLogin(), commentText, new Date());
@@ -182,8 +187,9 @@ public class NumberlinkController {
     }
     @PostMapping("/addRating")
     public String addRating(@RequestParam("rating") int rating) {
+        System.out.println("***********");
         if (!userController.isLogged()) {
-            return "redirect:/login";
+            return "redirect:/register";
         }
         Rating rating1 = new Rating("numberlink",userController.getLoggedUser().getLogin(),rating,new Date());
         ratingService.setRating(rating1);

@@ -19,13 +19,12 @@ public class RegisterController {
 
     @GetMapping
     public String showRegistrationForm() {
-        return "register"; // Vráti názov šablóny pre registráciu
+        return "register";
     }
 
     @PostMapping
     public String register(Player player) {
-        // Tu môžeš pridať logiku na spracovanie registrácie používateľa
         userService.addPlayer(player);
-        return "redirect:/"; // Presmeruje používateľa späť na úvodnú stránku po registrácii
+        return "redirect:/";
     }
 }

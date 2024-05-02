@@ -5,65 +5,65 @@
     <title>Gamestudio</title>
     <link rel="stylesheet" href="/css/stylesheet.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* CSS pre scrollovanie */
+        body, html {
+            height: 95%;
+            overflow-y: auto;
+        }
+        .right-content {
+            float: right;
+        }
+    </style>
 </head>
 <body>
-<h1>Numberlink</h1>
+<h1 class="main-heading">Numberlink</h1>
 
-<span th:if="${@userController.logged}">
-        Logged as: <span th:text="${@userController.loggedUser.login}"/><br/>
-        Your Rating: <span th:text="${playerRating}"/><br/>
-    </span>
-
-<h3 class="rate-game-section">Rate the Game</h3>
-<form action="/numberlink/addRating" method="post" class="rate-game-form">
-    <label for="rating">Your Rating:</label>
-    <select id="rating" name="rating" required>
-        <option value="1">1 star</option>
-        <option value="2">2 stars</option>
-        <option value="3">3 stars</option>
-        <option value="4">4 stars</option>
-        <option value="5">5 stars</option>
-    </select><br>
-    <input type="submit" value="Submit Rating">
-</form>
-
-<h4 th:utext="${@numberlinkController.getHtmlField()}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></h4>
+<div th:if="${@userController.logged}" class="user-info">
+    Logged as: <span th:text="${@userController.loggedUser.login}"/><br/>
+    Your Rating: <span th:text="${playerRating}"/><br/>
+</div>
+<div class="right-content">
+    <div th:utext="${@numberlinkController.getHtmlField()}"/>
+    <form action="/numberlink/addRating" method="post" class="rate-game-form">
+        <h3>Rate the Game</h3>
+        <label for="rating">Your Rating:</label>
+        <select id="rating" name="rating" required>
+            <option value="1">1 star</option>
+            <option value="2">2 stars</option>
+            <option value="3">3 stars</option>
+            <option value="4">4 stars</option>
+            <option value="5">5 stars</option>
+        </select><br>
+        <input type="submit" value="Submit Rating">
+    </form>
+</div>
 
 <span th:if="${isSolved}">Solved!</span>
 
-
 <div class="game-controls">
-    <a href="/numberlink/new">New game</a><br>
-
+    <a href="/numberlink/new">New game</a> or <a href="/">Logout</a> <br>
     <form action="/numberlink/chooseSize" method="get">
-        Rows: <input type="number" name="rows" value="3" min="2" max="9"><br>
-        Columns: <input type="number" name="columns" value="3" min="2" max="9"><br>
+        Size: <input type="number" name="rows" value="3" min="2" max="9"><br>
         <input type="submit" value="Choose Size">
     </form>
 </div>
 
-<h2 class="comments-table">Comments</h2>
-<table class="comments-table">
-    <tr>
-        <th>Player</th>
-        <th>Comment</th>
-        <th>Commented On</th>
-    </tr>
-    <tr th:each="comment : ${comments}">
-        <td th:text="${comment.player}"></td>
-        <td th:text="${comment.comment}"></td>
-        <td th:text="${#dates.format(comment.commentedOn, 'dd.MM.yyyy HH:mm:ss')}"></td>
-    </tr>
-</table>
 
 <div class="average-rating-section">
-    <h2>Average Rating for the Game</h2>
-    <p>The average rating for the game is: <span th:text="${averageRating}"></span></p>
+    <h3>
+    <p>The average rating for the game is: <span th:text="${averageRating}"></span></p> </h3>
 </div>
 <h3>Leave a Comment</h3>
+<form action="/numberlink/addComment" method="post">
+    <input type="hidden" name="playerName" th:if="${@userController.logged}" th:value="${@userController.loggedUser.login}">
+    <textarea name="comment" rows="6" style="width: 30%;" placeholder="Your Comment" required></textarea>
+    <button type="submit">Submit Comment</button>
+</form>
 
-<h3>Top scores</h3>
+
 <table class="scores">
+    <h3>Top scores</h3>
     <thead>
     <tr>
         <th>No.</th>
@@ -81,6 +81,19 @@
         <td th:text="${#dates.format(score.playedOn, 'dd.MM.yyyy HH:mm')}"/>
     </tr>
     </tbody>
+</table>
+<h3 class="comments-table">Comments</h3>
+<table class="comments-table">
+    <tr>
+        <th>Player</th>
+        <th>Comment</th>
+        <th>Commented On</th>
+    </tr>
+    <tr th:each="comment : ${comments}">
+        <td th:text="${comment.player}"></td>
+        <td th:text="${comment.comment}"></td>
+        <td th:text="${#dates.format(comment.commentedOn, 'dd.MM.yyyy HH:mm:ss')}"></td>
+    </tr>
 </table>
 </body>
 </html>

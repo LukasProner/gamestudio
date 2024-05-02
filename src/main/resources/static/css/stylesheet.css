@@ -3,25 +3,42 @@ body {
     font-size: 1rem;
     font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
     color: #000000;
-    max-width: 30rem;
     margin: auto;
     padding: 1em;
 }
-
 
 h1 {
     color: #045491;
     font-size: 3em
 }
 
+.main-heading {
+    position: relative; /* Zmena na relatívnu pozíciu */
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 20px 0;
+    background-color: #045491;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+
+}
+
+body, html {
+    height: 100%;
+    overflow-y: auto;
+}
+
 h2 {
     color: #045491;
-    font-size: 1.4em
+    font-size: 1.4em;
 }
 
 h3 {
     color: #045491;
-    font-size: 1.2em
+    font-size: 1.2em;
 }
 
 a:link, a:visited {
@@ -37,54 +54,75 @@ a:link:hover, a:visited:hover {
     text-decoration: underline;
 }
 
+div.minesControl {
+    border: 1px solid darkgrey;
+    border-radius: 0.4em;
+    padding: 0.5em;
+    min-width: 13em;
+}
+
+div.minesControl span.gameInfo {
+    width: 13em;
+    display: inline-block;
+}
+
+a.abutton {
+    border: 1px solid darkslategrey;
+    display: inline-block;
+    width: 8em;
+    margin: 0.1em;
+    padding: 0.1em;
+    border-radius: 0.2em;
+    background-color: white;
+    font-weight: normal;
+}
+
+a.abutton:hover {
+    background-color: springgreen;
+    text-decoration: none;
+    font-weight: normal;
+}
+
 label {
     vertical-align: top;
-    display: inline-block; /*instead of inline (default)*/
+    display: inline-block;
     min-width: 5em;
 }
+
 table.scores {
-    position:absolute;
-    bottom: 0;
-    left: 0;
-    width: 400px;
+    width: 40%; /* Nastavenie maximálnej šírky tabuľky na 100% veľkosti okna */
+    overflow-x: auto; /* Povoliť horizontálne scrollovanie pre tabuľku, ak je príliš široká */
 }
 
 .comments-table {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 400px;
+    max-width: 100%; /* Nastavenie maximálnej šírky tabuľky na 100% veľkosti okna */
+    overflow-x: auto; /* Povoliť horizontálne scrollovanie pre tabuľku, ak je príliš široká */
 }
 .average-rating-section {
-    position: absolute;
-    top: 50%;
-    left: 180px;
-    transform: translateX(-50%);
+    margin-top: 1em; /* Presunutie sekcie o 1em od horného okraja */
+}
+.user-info {
+    margin-top:1em; /* Presunutie informácií o používateľovi o 1em od horného okraja */
 }
 
 .rate-game-section {
-    position: absolute;
-    top: 35%;
-    left: 8%;
-    transform: translateX(-50%);
+    margin-top: 1em; /* Presunutie sekcie o 1em od horného okraja */
 }
+
 .game-controls {
-    position: absolute;
-    top: 24%;
-    left: 8%;
-    transform: translateX(-50%);
+    margin-top: 1em; /* Presunutie sekcie o 1em od horného okraja */
 }
+
 .rate-game-form {
-    position: absolute;
-    top: 45%;
-    left: 8.5%;
-    transform: translate(-50%, -50%);
+    position: relative; /* Zmena na relatívnu pozíciu */
+    margin-top: 1em; /* Presunutie formulára o 1em od horného okraja */
 }
+
 td {
     padding: 0;
 }
-table.scores {
 
+table.scores {
     border: black 2px;
 }
 
@@ -93,26 +131,28 @@ table.scores th {
     color: #FFFFFF;
     background-color: dimgray;
 }
+
 .comments-table th {
     font-weight: bold;
     color: #FFFFFF;
     background-color: dimgray;
 }
+
 .comments-table tr:nth-child(even) {
-    background-color: lightgray
+    background-color: lightgray;
 }
+
 .comments-table tr:nth-child(odd) {
     background-color: white;
 }
 
 table.scores tr:nth-child(even) {
-    background-color: lightgray
+    background-color: lightgray;
 }
 
 table.scores tr:nth-child(odd) {
     background-color: white;
 }
-
 
 #fieldTable {
     width: 50px;
