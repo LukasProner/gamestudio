@@ -27,7 +27,7 @@ import java.util.List;
 public class NumberlinkController {
     @Autowired
     private UserController userController;
-    private Field field = new Field(3,3);
+    private Field field = new Field(5,5);
     @Autowired
     private CommentService commentService;
 
@@ -35,7 +35,7 @@ public class NumberlinkController {
     private ScoreService scoreService;
     @Autowired
     private RatingService ratingService;
-
+    private boolean scoreAdded = false;
     @ModelAttribute("averageRating")
     public int getAverageRating() {
         return ratingService.getAverageRating("numberlink");
@@ -43,7 +43,6 @@ public class NumberlinkController {
 
     @RequestMapping
     public String numberlink(@RequestParam(required = false) Integer row, @RequestParam(required = false) Integer column, Model model) {
-
         double averageRating = ratingService.getAverageRating("numberlink");
         model.addAttribute("averageRating", averageRating);
 
@@ -58,7 +57,8 @@ public class NumberlinkController {
         model.addAttribute("scores",scoreService.getTopScores("numberlink"));
         if (row != null && column != null && field.getState()!=GameState.SOLVED)
             field.markTile(row, column);
-        if (field.getState() == GameState.SOLVED && userController.isLogged()) {
+        if (field.getState() == GameState.SOLVED && userController.isLogged() && !scoreAdded) {
+            scoreAdded = true;
             scoreService.addScore(new Score("numberlink",userController.getLoggedUser().getLogin(),field.getScore(),new Date()));
             System.out.println("saved");
             model.addAttribute("isSolved", true);
@@ -70,7 +70,8 @@ public class NumberlinkController {
 
     @RequestMapping("/new")
     public String newGame(Model model){
-        field = new Field(3,3);
+        scoreAdded = false;
+        field = new Field(5,5);
         List<Comment> comments = commentService.getComments("numberlink");
         List<Score> scores = scoreService.getTopScores("numberlink");
         model.addAttribute("field", getHtmlField());
