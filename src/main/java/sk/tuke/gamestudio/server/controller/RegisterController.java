@@ -24,7 +24,11 @@ public class RegisterController {
 
     @PostMapping
     public String register(Player player) {
-        userService.addPlayer(player);
-        return "redirect:/";
+        try {
+            userService.addPlayer(player);
+            return "redirect:/";
+        }catch(Exception e){
+        }
+        return null;
     }
 }

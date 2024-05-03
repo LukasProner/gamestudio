@@ -287,7 +287,7 @@ public class Field {
 
     public int getScore() {
         return state == GameState.SOLVED ?
-                (int) (rowCount * columnCount - (System.currentTimeMillis() - startMillis) / 1000)
+                (int) (rowCount * columnCount + (System.currentTimeMillis() - startMillis) / 1000)
                 :
                 0;
     }

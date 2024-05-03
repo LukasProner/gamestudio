@@ -37,12 +37,13 @@
         </select><br>
         <input type="submit" value="Submit Rating">
     </form>
+
 </div>
 
 <span th:if="${isSolved}">Solved!</span>
 
 <div class="game-controls">
-    <a href="/numberlink/new">New game</a> or <a href="/">Logout</a> <br>
+    <a href="/numberlink/new">New game</a> or <a href="/logout">Logout</a> <br>
     <form action="/numberlink/chooseSize" method="get">
         Size: <input type="number" name="rows" value="3" min="2" max="9"><br>
         <input type="submit" value="Choose Size">

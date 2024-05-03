@@ -95,7 +95,7 @@ table.scores {
 }
 
 .comments-table {
-    max-width: 100%; /* Nastavenie maximálnej šírky tabuľky na 100% veľkosti okna */
+    width: 100%; /* Nastavenie maximálnej šírky tabuľky na 100% veľkosti okna */
     overflow-x: auto; /* Povoliť horizontálne scrollovanie pre tabuľku, ak je príliš široká */
 }
 .average-rating-section {
