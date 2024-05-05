@@ -41,6 +41,7 @@ h3 {
     font-size: 1.2em;
 }
 
+
 a:link, a:visited {
     font-size: 1.4em;
     color: #045491;
@@ -111,6 +112,7 @@ table.scores {
 
 .game-controls {
     margin-top: 1em; /* Presunutie sekcie o 1em od horného okraja */
+    max-width: 100%;
 }
 
 .rate-game-form {

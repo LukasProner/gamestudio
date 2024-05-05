@@ -12,6 +12,7 @@ import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.numberlink.core.Colors;
 import sk.tuke.gamestudio.game.numberlink.core.Field;
 import sk.tuke.gamestudio.game.numberlink.core.GameState;
+import sk.tuke.gamestudio.game.numberlink.core.Number;
 import sk.tuke.gamestudio.game.numberlink.core.Tile;
 import sk.tuke.gamestudio.service.CommentService;
 import sk.tuke.gamestudio.service.RatingService;
@@ -36,6 +37,7 @@ public class NumberlinkController {
     @Autowired
     private RatingService ratingService;
     private boolean scoreAdded = false;
+
     @ModelAttribute("averageRating")
     public int getAverageRating() {
         return ratingService.getAverageRating("numberlink");
@@ -55,6 +57,7 @@ public class NumberlinkController {
         model.addAttribute("field", getHtmlField());
         model.addAttribute("comments", comments);
         model.addAttribute("scores",scoreService.getTopScores("numberlink"));
+        System.out.println(getConnectedNumbers() + '*');
         if (row != null && column != null && field.getState()!=GameState.SOLVED)
             field.markTile(row, column);
         if (field.getState() == GameState.SOLVED && userController.isLogged() && !scoreAdded) {
@@ -65,6 +68,7 @@ public class NumberlinkController {
         } else {
             model.addAttribute("isSolved", false);
         }
+        model.addAttribute("connectedNumbers",getConnectedNumbers());
         return "numberlink";
     }
 
@@ -101,6 +105,25 @@ public class NumberlinkController {
 
         return sb.toString();
     }
+    public String getConnectedNumbers() {
+        StringBuilder connectedNumbers = new StringBuilder();
+
+        for (int row = 0; row < field.getRowCount(); row++) {
+            for (int column = 0; column < field.getColumnCount(); column++) {
+                Tile tile = field.getTile(row, column);
+                if (tile instanceof Number && ((Number) tile).getIsFirst()) {
+                    int valueOfNumber = tile.getColor().ordinal();
+                    if (field.checkConnection(valueOfNumber)) {
+                        connectedNumbers.append(valueOfNumber).append(" ");
+                        System.out.println(valueOfNumber + "*********************");
+                    }
+                }
+            }
+        }
+
+        return connectedNumbers.toString();
+    }
+
     private String getImageName(Tile tile) {
         switch (tile.getColor()) {
             case NULL -> {
@@ -168,32 +191,43 @@ public class NumberlinkController {
         if (rows != null ) {
             field = new Field(rows,rows);
         } else {
-            // Default size, if not specified
             field = new Field(3, 3);
         }
-        // Add field to the model
+        List<Comment> comments = commentService.getComments("numberlink");
+        List<Score> scores = scoreService.getTopScores("numberlink");
         model.addAttribute("field", getHtmlField());
-        // Return view
+        model.addAttribute("comments", comments);
+        model.addAttribute("scores", scores);
         return "numberlink";
     }
     @PostMapping("/addComment")
-    public String addComment(@RequestParam(required = false) String playerName, @RequestParam("comment") String commentText) {
+    public String addComment(@RequestParam(required = false) String playerName, @RequestParam("comment") String commentText,Model model) {
         if (!userController.isLogged()) {
             return "redirect:/register";
         }
-
         Comment comment = new Comment("numberlink", userController.getLoggedUser().getLogin(), commentText, new Date());
         commentService.addComment(comment);
+        List<Comment> comments = commentService.getComments("numberlink");
+        List<Score> scores = scoreService.getTopScores("numberlink");
+        model.addAttribute("field", getHtmlField());
+        model.addAttribute("comments", comments);
+        model.addAttribute("scores", scores);
+
         return "numberlink";
     }
     @PostMapping("/addRating")
-    public String addRating(@RequestParam("rating") int rating) {
+    public String addRating(@RequestParam("rating") int rating,Model model) {
         System.out.println("***********");
         if (!userController.isLogged()) {
             return "redirect:/register";
         }
         Rating rating1 = new Rating("numberlink",userController.getLoggedUser().getLogin(),rating,new Date());
         ratingService.setRating(rating1);
+        List<Comment> comments = commentService.getComments("numberlink");
+        List<Score> scores = scoreService.getTopScores("numberlink");
+        model.addAttribute("field", getHtmlField());
+        model.addAttribute("comments", comments);
+        model.addAttribute("scores", scores);
         return "numberlink";
     }
 }
