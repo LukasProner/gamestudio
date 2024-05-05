@@ -58,15 +58,19 @@ public class NumberlinkController {
         model.addAttribute("comments", comments);
         model.addAttribute("scores",scoreService.getTopScores("numberlink"));
         System.out.println(getConnectedNumbers() + '*');
+        model.addAttribute("isSolved", false);
         if (row != null && column != null && field.getState()!=GameState.SOLVED)
             field.markTile(row, column);
+        if(field.getState() == GameState.SOLVED){
+            model.addAttribute("isSolved", true);
+        }
         if (field.getState() == GameState.SOLVED && userController.isLogged() && !scoreAdded) {
             scoreAdded = true;
             scoreService.addScore(new Score("numberlink",userController.getLoggedUser().getLogin(),field.getScore(),new Date()));
             System.out.println("saved");
             model.addAttribute("isSolved", true);
         } else {
-            model.addAttribute("isSolved", false);
+           // model.addAttribute("isSolved", false);
         }
         model.addAttribute("connectedNumbers",getConnectedNumbers());
         return "numberlink";

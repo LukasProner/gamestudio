@@ -54,8 +54,9 @@
 
 </div>
 
-
-<span th:if="${isSolved}">Solved!</span>
+<div class="centered">
+    <span class="solved-message" th:if="${isSolved}">Solved!</span>
+</div>
 <div class="game-controls-wrapper">
 <div class="game-controls">
     <a href="/numberlink/new">New game</a> <a style="color: #045491;font-weight: bold;font-size: 1.3em;"> or </a> <a href="/logout">Exit</a> <br>

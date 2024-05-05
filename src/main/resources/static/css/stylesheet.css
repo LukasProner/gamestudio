@@ -40,7 +40,28 @@ h3 {
     color: #045491;
     font-size: 1.2em;
 }
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 48%;
+    transform: translate(-50%, -50%);
+}
 
+.solved-message {
+    font-size: 40px;
+    color: #ff9900; /* or any color you prefer */
+    opacity: 0;
+    animation: fadeInOut 2s ease-in-out infinite alternate;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 
 a:link, a:visited {
     font-size: 1.4em;
