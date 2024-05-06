@@ -56,7 +56,6 @@ public class NumberlinkController {
         List<Comment> comments = commentService.getComments("numberlink");
         model.addAttribute("field", getHtmlField());
         model.addAttribute("comments", comments);
-        model.addAttribute("scores",scoreService.getTopScores("numberlink"));
         System.out.println(getConnectedNumbers() + '*');
         model.addAttribute("isSolved", false);
         if (row != null && column != null && field.getState()!=GameState.SOLVED)
@@ -73,6 +72,7 @@ public class NumberlinkController {
            // model.addAttribute("isSolved", false);
         }
         model.addAttribute("connectedNumbers",getConnectedNumbers());
+        model.addAttribute("scores",scoreService.getTopScores("numberlink"));
         return "numberlink";
     }
 

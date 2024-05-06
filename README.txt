@@ -5,3 +5,6 @@ https://www.youtube.com/watch?v=uAqUnn4S0vg
 
 Odovzdávka 2 (JPA + REST)
 https://www.youtube.com/watch?v=Q5D7ZnykJis
+
+Odovzdávka 3
+https://www.youtube.com/watch?v=dTIDoJP5IuI
