@@ -24,15 +24,17 @@ public class Score implements Serializable {
     private int points;
 
     private Date playedOn;
+    //private String size;
 
     public Score() {
     }
 
-    public Score(String game, String player, int points, Date playedOn) {
+    public Score(String game, String player, int points, Date playedOn/*,String size*/) {
         this.game = game;
         this.player = player;
         this.points = points;
         this.playedOn = playedOn;
+      //  this.size = size;
     }
 
     public int getIdent() {
@@ -46,6 +48,14 @@ public class Score implements Serializable {
     public String getGame() {
         return game;
     }
+
+   /* public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }*/
 
     public void setGame(String game) {
         this.game = game;

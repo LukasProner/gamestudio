@@ -41,7 +41,9 @@ public class ScoreServiceJDBC implements ScoreService {
             try (ResultSet rs = statement.executeQuery()) {
                 List<Score> scores = new ArrayList<>();
                 while (rs.next()) {
+                //    scores.add(new Score(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getTimestamp(4), rs.getString(5)));
                     scores.add(new Score(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getTimestamp(4)));
+
                 }
                 return scores;
             }

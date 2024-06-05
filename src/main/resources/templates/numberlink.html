@@ -64,31 +64,50 @@
         Size: <input type="number" name="rows" value="5" min="3" max="9"><br>
         <input type="submit" value="Choose Size">
     </form>
-</div>
-    <h3>
-    <p>Connected numbers: <span th:text="${connectedNumbers}"></span></p>
-</h3>
-
-<div class="average-rating-section">
-    <h3>
-    <p>The average rating for the game is: <span th:text="${averageRating}"></span></p> </h3>
-</div>
-<h3>Leave a Comment</h3>
-<form action="/numberlink/addComment" method="post">
-    <input type="hidden" name="playerName" th:if="${@userController.logged}" th:value="${@userController.loggedUser.login}">
-    <textarea name="comment" rows="6" style="width: 30%;" placeholder="Your Comment" required></textarea>
-    <button type="submit">Submit Comment</button>
-</form>
+    <form action="/numberlink/zolik" method="get" style="margin-top: 10px;">
+        <input type="submit" value="zolik">
+    </form>
 
 
-<table class="scores">
-    <h3>Top scores</h3>
-    <thead>
-    <tr>
-        <th>No.</th>
-        <th>Player</th>
-        <th>Points</th>
-        <th>Played at</th>
+    <!--123 -->
+    <!--   <form action="/numberlink/undo" method="post" style="margin-top: 10px;">
+          <input type="submit" value="Undo">
+      </form>-->
+  <!--   <form action="/numberlink/hint" method="post" style="margin-top: 10px;">
+        <input type="submit" value="HINT">
+        <p>Connected numbers: <span th:text="${numofhints}"></span></p>
+    </form>-->
+    <!-- <form action="/numberlink/removeConnection" method="get">
+         Line to remove: <input type="number" name="number" value="1" min="1" max="9"><br>
+         <input type="submit" value="Choose Number">
+     </form>-->
+ </div>
+     <h3>
+     <p>Connected numbers: <span th:text="${connectedNumbers}"></span></p>
+ </h3>
+
+ <div class="average-rating-section">
+     <h3>
+     <p>The average rating for the game is: <span th:text="${averageRating}"></span></p> </h3>
+ </div>
+ <h3>Leave a Comment</h3>
+ <form action="/numberlink/addComment" method="post">
+     <input type="hidden" name="playerName" th:if="${@userController.logged}" th:value="${@userController.loggedUser.login}">
+     <textarea name="comment" rows="6" style="width: 30%;" placeholder="Your Comment" required></textarea>
+     <button type="submit">Submit Comment</button>
+ </form>
+
+
+ <table class="scores">
+     <h3>Top scores</h3>
+     <thead>
+     <tr>
+         <th>No.</th>
+         <th>Player</th>
+         <th>Points</th>
+         <th>Played at</th>
+       <!--  <th>size</th>-->
+
     </tr>
     </thead>
     <tbody>
@@ -98,22 +117,24 @@
         <td th:text="${score.player}"/>
         <td th:text="${score.points}"/>
         <td th:text="${#dates.format(score.playedOn, 'dd.MM.yyyy HH:mm')}"/>
-    </tr>
-    </tbody>
-</table>
-</div>
-<h3 class="comments-table">Comments</h3>
-<table class="comments-table">
-    <tr>
-        <th>Player</th>
-        <th>Comment</th>
-        <th>Commented On</th>
-    </tr>
-    <tr th:each="comment : ${comments}">
-        <td th:text="${comment.player}"></td>
-        <td th:text="${comment.comment}"></td>
-        <td th:text="${#dates.format(comment.commentedOn, 'dd.MM.yyyy HH:mm:ss')}"></td>
-    </tr>
-</table>
-</body>
-</html>
+        <!--  <td th:text="${score.getSize()}"/>-->
+
+      </tr>
+      </tbody>
+  </table>
+  </div>
+  <h3 class="comments-table">Comments</h3>
+  <table class="comments-table">
+      <tr>
+          <th>Player</th>
+          <th>Comment</th>
+          <th>Commented On</th>
+      </tr>
+      <tr th:each="comment : ${comments}">
+          <td th:text="${comment.player}"></td>
+          <td th:text="${comment.comment}"></td>
+          <td th:text="${#dates.format(comment.commentedOn, 'dd.MM.yyyy HH:mm:ss')}"></td>
+      </tr>
+  </table>
+  </body>
+  </html>

@@ -9,11 +9,8 @@ import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
-import sk.tuke.gamestudio.game.numberlink.core.Colors;
-import sk.tuke.gamestudio.game.numberlink.core.Field;
-import sk.tuke.gamestudio.game.numberlink.core.GameState;
+import sk.tuke.gamestudio.game.numberlink.core.*;
 import sk.tuke.gamestudio.game.numberlink.core.Number;
-import sk.tuke.gamestudio.game.numberlink.core.Tile;
 import sk.tuke.gamestudio.service.CommentService;
 import sk.tuke.gamestudio.service.RatingService;
 import sk.tuke.gamestudio.service.ScoreService;
@@ -21,11 +18,14 @@ import sk.tuke.gamestudio.service.ScoreService;
 import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
+import java.util.Stack;
 
 @Controller
 @RequestMapping("/numberlink")
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class NumberlinkController {
+    private int num_of_hints = 2;
+
     @Autowired
     private UserController userController;
     private Field field = new Field(5,5);
@@ -37,6 +37,10 @@ public class NumberlinkController {
     @Autowired
     private RatingService ratingService;
     private boolean scoreAdded = false;
+    private int num_of_rows_to_connect = 1;
+
+    //pridane 123
+    private Stack<int[]> clickedTiles = new Stack<>();
 
     @ModelAttribute("averageRating")
     public int getAverageRating() {
@@ -45,6 +49,7 @@ public class NumberlinkController {
 
     @RequestMapping
     public String numberlink(@RequestParam(required = false) Integer row, @RequestParam(required = false) Integer column, Model model) {
+        num_of_rows_to_connect = 1;
         double averageRating = ratingService.getAverageRating("numberlink");
         model.addAttribute("averageRating", averageRating);
 
@@ -58,13 +63,21 @@ public class NumberlinkController {
         model.addAttribute("comments", comments);
         System.out.println(getConnectedNumbers() + '*');
         model.addAttribute("isSolved", false);
-        if (row != null && column != null && field.getState()!=GameState.SOLVED)
+        model.addAttribute("numofhints",num_of_hints);
+        if (row != null && column != null && field.getState()!=GameState.SOLVED) {
             field.markTile(row, column);
+            //123
+            if(field.getPrevTile(row,column)!= null && field.getTile(row,column).getClass() == Line.class) {
+                clickedTiles.push(new int[]{row, column});
+            }
+        }
         if(field.getState() == GameState.SOLVED){
             model.addAttribute("isSolved", true);
         }
         if (field.getState() == GameState.SOLVED && userController.isLogged() && !scoreAdded) {
             scoreAdded = true;
+         //   String sizeofField = field.getRowCount()  + "*" + field.getRowCount();
+//            scoreService.addScore(new Score("numberlink",userController.getLoggedUser().getLogin(),field.getScore(),new Date(),sizeofField));
             scoreService.addScore(new Score("numberlink",userController.getLoggedUser().getLogin(),field.getScore(),new Date()));
             System.out.println("saved");
             model.addAttribute("isSolved", true);
@@ -75,16 +88,70 @@ public class NumberlinkController {
         model.addAttribute("scores",scoreService.getTopScores("numberlink"));
         return "numberlink";
     }
+    @RequestMapping("/zolik")
+    public String zolik(Model model){
+        if(num_of_rows_to_connect>0) {
+            field.connectNumbersInField();
+            num_of_rows_to_connect--;
+        }
+        double averageRating = ratingService.getAverageRating("numberlink");
+        List<Comment> comments = commentService.getComments("numberlink");
+        model.addAttribute("averageRating", averageRating);
+        model.addAttribute("field", getHtmlField());
+        model.addAttribute("comments", comments);
+        model.addAttribute("scores",scoreService.getTopScores("numberlink"));
+        model.addAttribute("numofhints",num_of_hints);
+        return "numberlink";
+    }
+
+
+//123
+    @RequestMapping("/undo")
+    public String undo(Model model){
+        if(!clickedTiles.isEmpty()){
+            int[] lastclick = clickedTiles.pop();
+            int[] prevtile = field.getPrevTile(lastclick[0],lastclick[1]);
+            field.unMarkTile(lastclick[0],lastclick[1]);
+        }
+        double averageRating = ratingService.getAverageRating("numberlink");
+        List<Comment> comments = commentService.getComments("numberlink");
+        model.addAttribute("averageRating", averageRating);
+        model.addAttribute("field", getHtmlField());
+        model.addAttribute("comments", comments);
+        model.addAttribute("scores",scoreService.getTopScores("numberlink"));
+        model.addAttribute("numofhints",num_of_hints);
+        return "numberlink";
+    }
+
+    @RequestMapping("/hint")
+    public String hint(Model model){
+        if(num_of_hints>0) {
+            field.chooseHint();
+            num_of_hints--;
+        }
+        double averageRating = ratingService.getAverageRating("numberlink");
+        List<Comment> comments = commentService.getComments("numberlink");
+        model.addAttribute("averageRating", averageRating);
+        model.addAttribute("field", getHtmlField());
+        model.addAttribute("comments", comments);
+        model.addAttribute("scores", scoreService.getTopScores("numberlink"));
+        model.addAttribute("numofhints",num_of_hints);
+        return "numberlink";
+    }
 
     @RequestMapping("/new")
     public String newGame(Model model){
+        num_of_rows_to_connect = 1;
         scoreAdded = false;
         field = new Field(5,5);
+        clickedTiles.clear();
+        num_of_hints = 2;
         List<Comment> comments = commentService.getComments("numberlink");
         List<Score> scores = scoreService.getTopScores("numberlink");
         model.addAttribute("field", getHtmlField());
         model.addAttribute("comments", comments);
         model.addAttribute("scores", scores);
+        model.addAttribute("numofhints",num_of_hints);
 
         return "numberlink";
     }
@@ -106,7 +173,6 @@ public class NumberlinkController {
             sb.append("</tr>\n");
         }
         sb.append("</table>\n");
-
         return sb.toString();
     }
     public String getConnectedNumbers() {
@@ -192,6 +258,7 @@ public class NumberlinkController {
     }
     @RequestMapping("/chooseSize")
     public String chooseSize(@RequestParam(required = false) Integer rows, Model model) {
+        num_of_rows_to_connect = 1;
         if (rows != null ) {
             field = new Field(rows,rows);
         } else {
@@ -204,6 +271,20 @@ public class NumberlinkController {
         model.addAttribute("scores", scores);
         return "numberlink";
     }
+    @RequestMapping("/removeConnection")
+    public String removeConnection(@RequestParam(required = false) Integer number, Model model) {
+        if (number != null && number<= field.getMaxNumberOfMap(field.getRowCount()) && field.findFirstOfNumber(number)!=null) {
+           int [] position = field.findFirstOfNumber(number);
+           field.removeContinuedLines(position[0],position[1]);
+        }
+        List<Comment> comments = commentService.getComments("numberlink");
+        List<Score> scores = scoreService.getTopScores("numberlink");
+        model.addAttribute("field", getHtmlField());
+        model.addAttribute("comments", comments);
+        model.addAttribute("scores", scores);
+        return "numberlink";
+    }
+
     @PostMapping("/addComment")
     public String addComment(@RequestParam(required = false) String playerName, @RequestParam("comment") String commentText,Model model) {
         if (!userController.isLogged()) {

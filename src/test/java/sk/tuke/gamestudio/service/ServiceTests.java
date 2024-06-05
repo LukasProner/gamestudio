@@ -51,6 +51,11 @@ public class ServiceTests {
         scoreService.addScore(new Score("numberlink", "Churchill", 1965, date));
         scoreService.addScore(new Score("numberlink", "Lincoln", 1865, date));
         scoreService.addScore(new Score("numberlink", "Thatcher", 2013, date));
+        /*scoreService.addScore(new Score("numberlink", "Jaro", 100, date,null));
+        scoreService.addScore(new Score("numberlink", "Mirka", 120, date,null));
+        scoreService.addScore(new Score("numberlink", "Churchill", 1965, date,null));
+        scoreService.addScore(new Score("numberlink", "Lincoln", 1865, date,null));
+        scoreService.addScore(new Score("numberlink", "Thatcher", 2013, date,null));*/
         var scores = scoreService.getTopScores("numberlink");
         assertEquals(5, scores.size());
         assertEquals("numberlink", scores.get(0).getGame());

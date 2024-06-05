@@ -1,15 +1,21 @@
 package sk.tuke.gamestudio.game.numberlink.core;
 
+import java.util.Arrays;
+import java.util.Random;
+
 public class Field {
     private final int rowCount;
     private long startMillis;
     private final int columnCount;
     private final Tile[][] tiles;
     private Maps maps;
+    private int[][] hintMaps;
     private final Integer[] pairs;
     private int volueOfPrevious = 0;
     private GameState state;
     private final Colors[] colors = Colors.values(); //to convert a number to a color
+    //123
+
 
     public Field(int rowCount, int columnCount) {
         if (rowCount != columnCount) {
@@ -27,6 +33,7 @@ public class Field {
     public void prepareField() {
         this.maps = new Maps(getRowCount(), getColumnCount());
         int[][] mapValues = maps.getMap(getRowCount());
+        this.hintMaps = maps.getHintMap(getRowCount());
         for (int row = 0; row < getRowCount(); row++) {
             for (int column = 0; column < getColumnCount(); column++) {
                 if (mapValues[row][column] == 0) {
@@ -221,6 +228,73 @@ public class Field {
             }
         }
     }
+    public int[] getPrevTile(int row, int column) {
+        // Assuming tiles is a 2D array of some class that has the method getNextLine()
+        for (int i = 0; i < getRowCount(); i++) {
+            for (int j = 0; j < getColumnCount(); j++) {
+                if (tiles[i][j].getNextLine() == tiles[row][column]) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return null;
+    }
+    //123
+    public void connectNumbersInField(){
+        Random random = new Random();
+        int number = random.nextInt(maps.getCountOfNumber(getRowCount())+1);
+        this.hintMaps = maps.getHintMap(getRowCount());
+        while(number==0){
+            number = random.nextInt(maps.getCountOfNumber(getRowCount())+1);
+        }
+        findFirstOfNumber(number);
+
+        for (int row = 0; row < getRowCount(); row++) {
+            for (int column = 0; column < getColumnCount(); column++) {
+                if (hintMaps[row][column] == number ){
+                    tiles[row][column].setColor(colors[number]);
+                }
+            }
+        }
+    }
+
+    public int[] findFirstOfNumber(int valueOfPrevious) {
+        if(isThereFirstOfNumber(volueOfPrevious)) {
+            for (int row = 0; row < getRowCount(); row++) {
+                for (int column = 0; column < getColumnCount(); column++) {
+                    if (tiles[row][column] instanceof Number && ((Number) tiles[row][column]).getIsFirst() && ((Number) tiles[row][column]).getVolue() == valueOfPrevious) {
+                        return new int[]{row, column};
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+
+
+    public int getMaxNumberOfMap(int sizeOfRowsInMap){
+        return maps.getCountOfNumber(sizeOfRowsInMap);
+    }
+    public void unMarkTile(int row,int column){
+        tiles[row][column].setColor(Colors.NULL);
+    }
+
+    public int[] chooseHint(){
+        Random random = new Random();
+        int row = random.nextInt(rowCount);
+        int column = random.nextInt(columnCount);
+        while((hintMaps[row][column]==0 || tiles[row][column].getColor() != Colors.NULL) && !checkStateOfTheGame()) {
+            row = random.nextInt(rowCount);
+            column = random.nextInt(columnCount);
+        }
+        System.out.println(tiles[row][column].getColor());
+        tiles[row][column].setColor(colors[hintMaps[row][column]]);
+        System.out.println(row + " + " + column);
+        return null;
+    }
+
+
 
     public boolean checkConnection(int valueOfNumber) {
         for (int row = 0; row < getRowCount(); row++) {

@@ -52,7 +52,10 @@ public class ConsoleUI {
             if (field.getState() == GameState.SOLVED) {
                 show();
                 timer.cancel();
+                String sizeofField = field.getRowCount()  + "*" + field.getRowCount();
+               // scoreService.addScore(new Score("numberlink", System.getProperty("user.name"), timerOfGame.getTime() * 100 / (field.getColumnCount() * 2), new Date(),sizeofField));
                 scoreService.addScore(new Score("numberlink", System.getProperty("user.name"), timerOfGame.getTime() * 100 / (field.getColumnCount() * 2), new Date()));
+
                 System.out.println("               Solved!");
                 wannaAddRating();
                 wannaAddComment();
